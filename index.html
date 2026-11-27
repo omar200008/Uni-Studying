@@ -7,6 +7,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>Respiratory Study Hub</title>
   <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icon.png" />
+  <link rel="icon" type="image/png" href="icon.png" />
   <style>
     :root { --bg:#0f172a; --card:#1e293b; --border:#334155; --text:#f8fafc; --muted:#94a3b8; --accent:#38bdf8; --green:#22c55e; }
     * { box-sizing:border-box; margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; }
@@ -42,31 +44,36 @@
     <a href="histology.html" class="card"><div class="card-top"><span class="badge">First Pass</span></div><h2>Respiratory Histology</h2><p>Slide breakdowns, tissue notes, and diagrams.</p></a>
   </div>
   <script>
-    function loadScript(src) {
-      return new Promise((res, rej) => { const s = document.createElement("script"); s.src = src; s.onload = res; s.onerror = rej; document.head.appendChild(s); });
+    const msg = document.getElementById("syncText");
+    function addJs(u) {
+      return new Promise((ok, no) => { const s = document.createElement("script"); s.src = u; s.onload = ok; s.onerror = () => no("Blocked: " + u); document.head.appendChild(s); });
     }
     (async () => {
-      const host = location.protocol + "//www." + "gstatic.com" + "/firebasejs/10.14.1/";
-      await loadScript(host + "firebase-app-compat.js");
-      await loadScript(host + "firebase-firestore-compat.js");
-      firebase.initializeApp({
-        apiKey: "AIzaSyCxtO8FdhPF-4qacnMIOtzCRP30KeZ3sYo",
-        authDomain: "uni-study-tracker-58dd0." + "firebaseapp.com",
-        projectId: "uni-study-tracker-58dd0",
-        storageBucket: "uni-study-tracker-58dd0." + "firebasestorage.app",
-        messagingSenderId: "16736564692",
-        appId: "1:16736564692:web:8c8300a0833c790d84d241"
-      });
-      firebase.firestore().collection("studyData").doc("tracker").onSnapshot((snap) => {
-        document.getElementById("syncDot").classList.add("live");
-        document.getElementById("syncText").textContent = "Synced across all devices";
-        if (snap.exists) {
-          const done = Object.values(snap.data().checked || {}).filter(Boolean).length;
-          const total = snap.data().total || 21;
-          document.getElementById("trackerCount").textContent = `${done} / ${total}`;
-          document.getElementById("trackerFill").style.width = `${Math.round((done / total) * 100)}%`;
-        }
-      });
+      try {
+        const p = location.protocol + "//www." + "://gstatic.com";
+        await addJs(p + "firebase-app-compat.js");
+        await addJs(p + "firebase-firestore-compat.js");
+        firebase.initializeApp({
+          apiKey: "AIzaSyCxtO8FdhPF-4qacnMIOtzCRP30KeZ3sYo",
+          authDomain: "uni-study-tracker-58dd0." + "firebaseapp.com",
+          projectId: "uni-study-tracker-58dd0",
+          storageBucket: "uni-study-tracker-58dd0." + "firebasestorage.app",
+          messagingSenderId: "16736564692",
+          appId: "1:16736564692:web:8c8300a0833c790d84d241"
+        });
+        const db = firebase.firestore();
+        db.settings({ experimentalForceLongPolling: true });
+        db.collection("studyData").doc("tracker").onSnapshot((snap) => {
+          document.getElementById("syncDot").classList.add("live");
+          msg.textContent = "Synced across all devices";
+          if (snap.exists) {
+            const done = Object.values(snap.data().checked || {}).filter(Boolean).length;
+            const total = snap.data().total || 21;
+            document.getElementById("trackerCount").textContent = `${done} / ${total}`;
+            document.getElementById("trackerFill").style.width = `${Math.round((done / total) * 100)}%`;
+          }
+        }, (err) => { msg.textContent = "Firestore error: " + err.message; });
+      } catch (e) { msg.textContent = "Error: " + e; }
     })();
   </script>
 </body>
