@@ -239,3 +239,34 @@ render();
 
 (async () => {
   try {
+const base = ["https:", "", "gstatic.com", "firebasejs", "11.0.2"].join("/");
+const { initializeApp } = await import(${base}/firebase-app.js);
+const { getFirestore, doc, setDoc, onSnapshot } = await import(${base}/firebase-firestore.js);
+const app = initializeApp({
+apiKey: "AIzaSyCxtO8FdhPF-4qacnMIOtzCRP30KeZ3sYo",
+authDomain: ["uni-study-tracker-58dd0", "firebaseapp.com"].join("."),
+projectId: "uni-study-tracker-58dd0",
+storageBucket: ["uni-study-tracker-58dd0", "firebasestorage.app"].join("."),
+messagingSenderId: "16736564692",
+appId: "1:16736564692:web:8c8300a0833c790d84d241"
+});
+const db = getFirestore(app);
+const trackerRef = doc(db, "studyData", "tracker");
+cloudSave = (st) => setDoc(trackerRef, { checked: st, total: TOTAL_ITEMS }, { merge: true });
+onSnapshot(trackerRef, (snap) => {
+document.getElementById("syncDot").classList.add("live");
+document.getElementById("syncStatus").textContent = "Synced";
+if (snap.exists() && snap.data().checked) {
+state = snap.data().checked;
+saveLocal(state);
+render();
+} else if (Object.keys(state).length > 0) {
+cloudSave(state);
+}
+}, () => {
+document.getElementById("syncStatus").textContent = "Offline";
+});
+} catch (e) {
+document.getElementById("syncStatus").textContent = "Local only";
+}
+})();
