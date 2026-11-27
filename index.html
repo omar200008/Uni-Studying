@@ -106,35 +106,41 @@
     </a>
   </div>
 
-  <script type="module">
-    import { initializeApp } from "https://gstatic.com";
-    import { getFirestore, doc, onSnapshot } from "https://gstatic.com";
+  <script>
+    (async () => {
+      try {
+        const base = ["https:", "", "://gstatic.com", "firebasejs", "11.0.2"].join("/");
+        const { initializeApp } = await import(`${base}/firebase-app.js`);
+        const { getFirestore, doc, onSnapshot } = await import(`${base}/firebase-firestore.js`);
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyCxtO8FdhPF-4qacnMIOtzCRP30KeZ3sYo",
-      authDomain: "uni-study-tracker-58dd0.firebaseapp.com",
-      projectId: "uni-study-tracker-58dd0",
-      storageBucket: "uni-study-tracker-58dd0.firebasestorage.app",
-      messagingSenderId: "16736564692",
-      appId: "1:16736564692:web:8c8300a0833c790d84d241"
-    };
+        const app = initializeApp({
+          apiKey: "AIzaSyCxtO8FdhPF-4qacnMIOtzCRP30KeZ3sYo",
+          authDomain: ["uni-study-tracker-58dd0", "firebaseapp.com"].join("."),
+          projectId: "uni-study-tracker-58dd0",
+          storageBucket: ["uni-study-tracker-58dd0", "firebasestorage.app"].join("."),
+          messagingSenderId: "16736564692",
+          appId: "1:16736564692:web:8c8300a0833c790d84d241"
+        });
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+        const db = getFirestore(app);
 
-    onSnapshot(doc(db, "studyData", "tracker"), (snap) => {
-      document.getElementById("syncDot").classList.add("live");
-      document.getElementById("syncText").textContent = "Synced across all devices";
-      if (snap.exists()) {
-        const checked = snap.data().checked || {};
-        const done = Object.values(checked).filter(Boolean).length;
-        const total = snap.data().total || 20;
-        document.getElementById("trackerCount").textContent = `${done} / ${total}`;
-        document.getElementById("trackerFill").style.width = `${Math.round((done / total) * 100)}%`;
+        onSnapshot(doc(db, "studyData", "tracker"), (snap) => {
+          document.getElementById("syncDot").classList.add("live");
+          document.getElementById("syncText").textContent = "Synced across all devices";
+          if (snap.exists()) {
+            const checked = snap.data().checked || {};
+            const done = Object.values(checked).filter(Boolean).length;
+            const total = snap.data().total || 20;
+            document.getElementById("trackerCount").textContent = `${done} / ${total}`;
+            document.getElementById("trackerFill").style.width = `${Math.round((done / total) * 100)}%`;
+          }
+        }, (err) => {
+          document.getElementById("syncText").textContent = "Error: " + err.code;
+        });
+      } catch (e) {
+        document.getElementById("syncText").textContent = "Script error";
       }
-    }, () => {
-      document.getElementById("syncText").textContent = "Offline mode";
-    });
+    })();
   </script>
 </body>
 </html>
