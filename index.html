@@ -46,14 +46,14 @@
       return new Promise((res, rej) => { const s = document.createElement("script"); s.src = src; s.onload = res; s.onerror = rej; document.head.appendChild(s); });
     }
     (async () => {
-      const base = ["https:", "", "://gstatic.com", "firebasejs", "10.14.1"].join("/");
-      await loadScript(base + "/firebase-app-compat.js");
-      await loadScript(base + "/firebase-firestore-compat.js");
+      const host = location.protocol + "//www." + "gstatic.com" + "/firebasejs/10.14.1/";
+      await loadScript(host + "firebase-app-compat.js");
+      await loadScript(host + "firebase-firestore-compat.js");
       firebase.initializeApp({
         apiKey: "AIzaSyCxtO8FdhPF-4qacnMIOtzCRP30KeZ3sYo",
-        authDomain: ["uni-study-tracker-58dd0", "firebaseapp.com"].join("."),
+        authDomain: "uni-study-tracker-58dd0." + "firebaseapp.com",
         projectId: "uni-study-tracker-58dd0",
-        storageBucket: ["uni-study-tracker-58dd0", "firebasestorage.app"].join("."),
+        storageBucket: "uni-study-tracker-58dd0." + "firebasestorage.app",
         messagingSenderId: "16736564692",
         appId: "1:16736564692:web:8c8300a0833c790d84d241"
       });
@@ -66,7 +66,7 @@
           document.getElementById("trackerCount").textContent = `${done} / ${total}`;
           document.getElementById("trackerFill").style.width = `${Math.round((done / total) * 100)}%`;
         }
-      }, (err) => { document.getElementById("syncText").textContent = "Sync error: " + err.message; });
+      });
     })();
   </script>
 </body>
