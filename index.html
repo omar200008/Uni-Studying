@@ -7,140 +7,61 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>Respiratory Study Hub</title>
   <link rel="manifest" href="manifest.json" />
+  <script src="https://gstatic.com"></script>
+  <script src="https://gstatic.com"></script>
   <style>
-    :root {
-      --bg: #0f172a;
-      --card: #1e293b;
-      --border: #334155;
-      --text: #f8fafc;
-      --muted: #94a3b8;
-      --accent: #38bdf8;
-      --green: #22c55e;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body {
-      background: var(--bg);
-      color: var(--text);
-      padding: calc(24px + env(safe-area-inset-top)) 20px 40px;
-      max-width: 720px;
-      margin: 0 auto;
-    }
-    header { margin-bottom: 28px; }
-    h1 { font-size: 1.75rem; font-weight: 700; margin-bottom: 6px; }
-    .subtitle { color: var(--muted); font-size: 0.95rem; display: flex; align-items: center; gap: 8px; }
-    .sync-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); display: inline-block; }
-    .sync-dot.live { background: var(--green); box-shadow: 0 0 8px var(--green); }
-    .grid { display: grid; gap: 16px; }
-    a.card {
-      display: block;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 20px;
-      text-decoration: none;
-      color: inherit;
-      transition: transform 0.15s ease, border-color 0.15s ease;
-    }
-    a.card:active { transform: scale(0.98); }
-    a.card:hover { border-color: var(--accent); }
-    .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-    .badge {
-      font-size: 0.75rem;
-      font-weight: 600;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: rgba(56, 189, 248, 0.15);
-      color: var(--accent);
-    }
-    .card h2 { font-size: 1.2rem; margin-bottom: 4px; }
-    .card p { color: var(--muted); font-size: 0.9rem; line-height: 1.4; }
-    .progress-bar {
-      margin-top: 14px;
-      height: 8px;
-      background: #0f172a;
-      border-radius: 999px;
-      overflow: hidden;
-    }
-    .progress-fill {
-      height: 100%;
-      width: 0%;
-      background: var(--green);
-      transition: width 0.3s ease;
-    }
+    :root { --bg:#0f172a; --card:#1e293b; --border:#334155; --text:#f8fafc; --muted:#94a3b8; --accent:#38bdf8; --green:#22c55e; }
+    * { box-sizing:border-box; margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; }
+    body { background:var(--bg); color:var(--text); padding:calc(24px + env(safe-area-inset-top)) 20px 40px; max-width:720px; margin:0 auto; }
+    header { margin-bottom:28px; }
+    h1 { font-size:1.75rem; font-weight:700; margin-bottom:6px; }
+    .subtitle { color:var(--muted); font-size:0.95rem; display:flex; align-items:center; gap:8px; }
+    .sync-dot { width:8px; height:8px; border-radius:50%; background:var(--muted); display:inline-block; }
+    .sync-dot.live { background:var(--green); box-shadow:0 0 8px var(--green); }
+    .grid { display:grid; gap:16px; }
+    a.card { display:block; background:var(--card); border:1px solid var(--border); border-radius:16px; padding:20px; text-decoration:none; color:inherit; }
+    .card-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+    .badge { font-size:0.75rem; font-weight:600; padding:4px 10px; border-radius:999px; background:rgba(56,189,248,0.15); color:var(--accent); }
+    .card h2 { font-size:1.2rem; margin-bottom:4px; }
+    .card p { color:var(--muted); font-size:0.9rem; line-height:1.4; }
+    .progress-bar { margin-top:14px; height:8px; background:#0f172a; border-radius:999px; overflow:hidden; }
+    .progress-fill { height:100%; width:0%; background:var(--green); transition:width 0.3s ease; }
   </style>
 </head>
 <body>
   <header>
     <h1>Respiratory Study Hub</h1>
-    <div class="subtitle">
-      <span id="syncDot" class="sync-dot"></span>
-      <span id="syncText">Connecting to cloud sync...</span>
-    </div>
+    <div class="subtitle"><span id="syncDot" class="sync-dot"></span><span id="syncText">Connecting to cloud sync...</span></div>
   </header>
-
   <div class="grid">
     <a href="tracker.html" class="card">
-      <div class="card-top">
-        <span class="badge">Live Synced</span>
-        <span id="trackerCount" style="font-weight: 600; color: var(--green);">0 / 20</span>
-      </div>
+      <div class="card-top"><span class="badge">Live Synced</span><span id="trackerCount" style="font-weight:600;color:var(--green);">0 / 21</span></div>
       <h2>Study Tracker</h2>
-      <p>Track all 20 Respiratory Mid lectures with instant sync across iPad &amp; Mac.</p>
+      <p>Track all Respiratory Mid lectures with instant sync across iPad &amp; Mac.</p>
       <div class="progress-bar"><div id="trackerFill" class="progress-fill"></div></div>
     </a>
-
-    <a href="anatomy.html" class="card">
-      <div class="card-top">
-        <span class="badge">First Pass</span>
-      </div>
-      <h2>Respiratory Anatomy</h2>
-      <p>Interactive diagrams, collapsible sections, and synced highlights.</p>
-    </a>
-
-    <a href="histology.html" class="card">
-      <div class="card-top">
-        <span class="badge">First Pass</span>
-      </div>
-      <h2>Respiratory Histology</h2>
-      <p>Slide breakdowns, tissue notes, and synced highlights.</p>
-    </a>
+    <a href="anatomy.html" class="card"><div class="card-top"><span class="badge">First Pass</span></div><h2>Respiratory Anatomy</h2><p>Interactive diagrams, collapsible sections, and study notes.</p></a>
+    <a href="histology.html" class="card"><div class="card-top"><span class="badge">First Pass</span></div><h2>Respiratory Histology</h2><p>Slide breakdowns, tissue notes, and diagrams.</p></a>
   </div>
-
   <script>
-    (async () => {
-      try {
-        const base = ["https:", "", "://gstatic.com", "firebasejs", "11.0.2"].join("/");
-        const { initializeApp } = await import(`${base}/firebase-app.js`);
-        const { getFirestore, doc, onSnapshot } = await import(`${base}/firebase-firestore.js`);
-
-        const app = initializeApp({
-          apiKey: "AIzaSyCxtO8FdhPF-4qacnMIOtzCRP30KeZ3sYo",
-          authDomain: ["uni-study-tracker-58dd0", "firebaseapp.com"].join("."),
-          projectId: "uni-study-tracker-58dd0",
-          storageBucket: ["uni-study-tracker-58dd0", "firebasestorage.app"].join("."),
-          messagingSenderId: "16736564692",
-          appId: "1:16736564692:web:8c8300a0833c790d84d241"
-        });
-
-        const db = getFirestore(app);
-
-        onSnapshot(doc(db, "studyData", "tracker"), (snap) => {
-          document.getElementById("syncDot").classList.add("live");
-          document.getElementById("syncText").textContent = "Synced across all devices";
-          if (snap.exists()) {
-            const checked = snap.data().checked || {};
-            const done = Object.values(checked).filter(Boolean).length;
-            const total = snap.data().total || 20;
-            document.getElementById("trackerCount").textContent = `${done} / ${total}`;
-            document.getElementById("trackerFill").style.width = `${Math.round((done / total) * 100)}%`;
-          }
-        }, (err) => {
-          document.getElementById("syncText").textContent = "Error: " + err.code;
-        });
-      } catch (e) {
-        document.getElementById("syncText").textContent = "Script error";
+    firebase.initializeApp({
+      apiKey: "AIzaSyCxtO8FdhPF-4qacnMIOtzCRP30KeZ3sYo",
+      authDomain: "://firebaseapp.com",
+      projectId: "uni-study-tracker-58dd0",
+      storageBucket: "uni-study-tracker-58dd0.firebasestorage.app",
+      messagingSenderId: "16736564692",
+      appId: "1:16736564692:web:8c8300a0833c790d84d241"
+    });
+    firebase.firestore().collection("studyData").doc("tracker").onSnapshot((snap) => {
+      document.getElementById("syncDot").classList.add("live");
+      document.getElementById("syncText").textContent = "Synced across all devices";
+      if (snap.exists) {
+        const done = Object.values(snap.data().checked || {}).filter(Boolean).length;
+        const total = snap.data().total || 21;
+        document.getElementById("trackerCount").textContent = `${done} / ${total}`;
+        document.getElementById("trackerFill").style.width = `${Math.round((done / total) * 100)}%`;
       }
-    })();
+    }, (err) => { document.getElementById("syncText").textContent = "Sync error: " + err.message; });
   </script>
 </body>
 </html>
