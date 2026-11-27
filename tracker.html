@@ -155,26 +155,11 @@
 
   <div id="list"></div>
 
-  <script type="module">
-    import { initializeApp } from "https://gstatic.com";
-    import { getFirestore, doc, setDoc, onSnapshot } from "https://gstatic.com";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyCxtO8FdhPF-4qacnMIOtzCRP30KeZ3sYo",
-      authDomain: "uni-study-tracker-58dd0.firebaseapp.com",
-      projectId: "uni-study-tracker-58dd0",
-      storageBucket: "uni-study-tracker-58dd0.firebasestorage.app",
-      messagingSenderId: "16736564692",
-      appId: "1:16736564692:web:8c8300a0833c790d84d241"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const trackerRef = doc(db, "studyData", "tracker");
-
+  <script>
     const TOTAL = 20;
     let state = { checked: {}, titles: {} };
 
+    // Build all 20 lectures immediately (even before cloud connects)
     const listEl = document.getElementById("list");
     for (let day = 1; day <= 10; day++) {
       const group = document.createElement("div");
@@ -217,43 +202,64 @@
       document.getElementById("progressFill").style.width = `${Math.round((doneCount / TOTAL) * 100)}%`;
     }
 
-    async function save() {
-      await setDoc(trackerRef, { checked: state.checked, titles: state.titles, total: TOTAL }, { merge: true });
-    }
+    // Load Firebase safely without copy-paste URL stripping
+    (async () => {
+      try {
+        const base = ["https:", "", "://gstatic.com", "firebasejs", "11.0.2"].join("/");
+        const { initializeApp } = await import(`${base}/firebase-app.js`);
+        const { getFirestore, doc, setDoc, onSnapshot } = await import(`${base}/firebase-firestore.js`);
 
-    onSnapshot(trackerRef, (snap) => {
-      document.getElementById("dot").classList.add("live");
-      document.getElementById("status").textContent = "Synced";
-      if (snap.exists()) {
-        const data = snap.data();
-        state.checked = data.checked || {};
-        state.titles = data.titles || {};
-      }
-      render();
-    }, () => {
-      document.getElementById("status").textContent = "Offline";
-    });
+        const app = initializeApp({
+          apiKey: "AIzaSyCxtO8FdhPF-4qacnMIOtzCRP30KeZ3sYo",
+          authDomain: ["uni-study-tracker-58dd0", "firebaseapp.com"].join("."),
+          projectId: "uni-study-tracker-58dd0",
+          storageBucket: ["uni-study-tracker-58dd0", "firebasestorage.app"].join("."),
+          messagingSenderId: "16736564692",
+          appId: "1:16736564692:web:8c8300a0833c790d84d241"
+        });
 
-    listEl.addEventListener("change", (e) => {
-      if (e.target.type === "checkbox") {
-        const key = e.target.id.replace("chk_", "");
-        state.checked[key] = e.target.checked;
-        render();
-        save();
-      } else if (e.target.classList.contains("lec-title")) {
-        const key = e.target.id.replace("txt_", "");
-        state.titles[key] = e.target.value;
-        save();
-      }
-    });
+        const db = getFirestore(app);
+        const trackerRef = doc(db, "studyData", "tracker");
 
-    document.getElementById("resetBtn").addEventListener("click", () => {
-      if (confirm("Reset all 20 lectures?")) {
-        state.checked = {};
-        render();
-        save();
+        const save = () => setDoc(trackerRef, { checked: state.checked, titles: state.titles, total: TOTAL }, { merge: true });
+
+        onSnapshot(trackerRef, (snap) => {
+          document.getElementById("dot").classList.add("live");
+          document.getElementById("status").textContent = "Synced";
+          if (snap.exists()) {
+            const data = snap.data();
+            state.checked = data.checked || {};
+            state.titles = data.titles || {};
+          }
+          render();
+        }, (err) => {
+          document.getElementById("status").textContent = "Error: " + err.code;
+        });
+
+        listEl.addEventListener("change", (e) => {
+          if (e.target.type === "checkbox") {
+            const key = e.target.id.replace("chk_", "");
+            state.checked[key] = e.target.checked;
+            render();
+            save();
+          } else if (e.target.classList.contains("lec-title")) {
+            const key = e.target.id.replace("txt_", "");
+            state.titles[key] = e.target.value;
+            save();
+          }
+        });
+
+        document.getElementById("resetBtn").addEventListener("click", () => {
+          if (confirm("Reset all 20 lectures?")) {
+            state.checked = {};
+            render();
+            save();
+          }
+        });
+      } catch (e) {
+        document.getElementById("status").textContent = "Load failed";
       }
-    });
+    })();
   </script>
 </body>
 </html>
