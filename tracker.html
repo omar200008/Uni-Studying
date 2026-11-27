@@ -76,8 +76,7 @@ let state = JSON.parse(localStorage.getItem(STORE_KEY) || "{}");
 let cloudSave = null;
 
 function render(){
-  const daysEl = document.getElementById('days');
-  daysEl.innerHTML = '';
+  const daysEl = document.getElementById('days'); daysEl.innerHTML = '';
   PLAN.forEach((day, di) => {
     const card = document.createElement('div'); card.className = 'day';
     card.innerHTML = `<div class="day-head"><div><div class="day-title">${day.title}</div><div class="day-date">${day.date}</div></div><div class="day-badge">${day.items.length} item${day.items.length>1?'s':''}</div></div>`;
@@ -113,22 +112,30 @@ function resetAll(){
 }
 render();
 
-firebase.initializeApp({
-  apiKey: "AIzaSyCxtO8FdhPF-4qacnMIOtzCRP30KeZ3sYo",
-  authDomain: "://firebaseapp.com",
-  projectId: "uni-study-tracker-58dd0",
-  storageBucket: "uni-study-tracker-58dd0.firebasestorage.app",
-  messagingSenderId: "16736564692",
-  appId: "1:16736564692:web:8c8300a0833c790d84d241"
-});
-const trackerRef = firebase.firestore().collection("studyData").doc("tracker");
-cloudSave = (st) => trackerRef.set({ checked: st, total: TOTAL_ITEMS }, { merge: true });
-trackerRef.onSnapshot((snap) => {
-  document.getElementById("syncDot").classList.add("live");
-  document.getElementById("syncStatus").textContent = "Synced";
-  if (snap.exists && snap.data().checked) { state = snap.data().checked; localStorage.setItem(STORE_KEY, JSON.stringify(state)); render(); }
-  else if (Object.keys(state).length > 0) { cloudSave(state); }
-}, (err) => { document.getElementById("syncStatus").textContent = "Error: " + err.code; });
+function loadScript(src) {
+  return new Promise((res, rej) => { const s = document.createElement("script"); s.src = src; s.onload = res; s.onerror = rej; document.head.appendChild(s); });
+}
+(async () => {
+  const host = location.protocol + "//www." + "gstatic.com" + "/firebasejs/10.14.1/";
+  await loadScript(host + "firebase-app-compat.js");
+  await loadScript(host + "firebase-firestore-compat.js");
+  firebase.initializeApp({
+    apiKey: "AIzaSyCxtO8FdhPF-4qacnMIOtzCRP30KeZ3sYo",
+    authDomain: "uni-study-tracker-58dd0." + "firebaseapp.com",
+    projectId: "uni-study-tracker-58dd0",
+    storageBucket: "uni-study-tracker-58dd0." + "firebasestorage.app",
+    messagingSenderId: "16736564692",
+    appId: "1:16736564692:web:8c8300a0833c790d84d241"
+  });
+  const trackerRef = firebase.firestore().collection("studyData").doc("tracker");
+  cloudSave = (st) => trackerRef.set({ checked: st, total: TOTAL_ITEMS }, { merge: true });
+  trackerRef.onSnapshot((snap) => {
+    document.getElementById("syncDot").classList.add("live");
+    document.getElementById("syncStatus").textContent = "Synced";
+    if (snap.exists && snap.data().checked) { state = snap.data().checked; localStorage.setItem(STORE_KEY, JSON.stringify(state)); render(); }
+    else if (Object.keys(state).length > 0) { cloudSave(state); }
+  });
+})();
 </script>
 </body>
 </html>
