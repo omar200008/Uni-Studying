@@ -50,14 +50,15 @@
     }
     (async () => {
       try {
-        const p = location.protocol + "//www." + "://gstatic.com";
+        const host = ["www", "gstatic", "com"].join(".");
+        const p = location.protocol + "//" + host + "/firebasejs/10.14.1/";
         await addJs(p + "firebase-app-compat.js");
         await addJs(p + "firebase-firestore-compat.js");
         firebase.initializeApp({
           apiKey: "AIzaSyCxtO8FdhPF-4qacnMIOtzCRP30KeZ3sYo",
-          authDomain: "uni-study-tracker-58dd0." + "firebaseapp.com",
+          authDomain: ["uni-study-tracker-58dd0", "firebaseapp", "com"].join("."),
           projectId: "uni-study-tracker-58dd0",
-          storageBucket: "uni-study-tracker-58dd0." + "firebasestorage.app",
+          storageBucket: ["uni-study-tracker-58dd0", "firebasestorage", "app"].join("."),
           messagingSenderId: "16736564692",
           appId: "1:16736564692:web:8c8300a0833c790d84d241"
         });
