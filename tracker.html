@@ -3,223 +3,132 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
 <title>Respiratory Mid — Study Tracker</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%AB%81%3C/text%3E%3C/svg%3E">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://w3.org' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%AB%81%3C/text%3E%3C/svg%3E">
+<script src="https://gstatic.com"></script>
+<script src="https://gstatic.com"></script>
 <style>
-:root{
-  --bg:#f4f6f8; --card:#ffffff; --text:#15202b; --sub:#5b6b7a;
-  --accent:#2563eb; --accent-soft:#dbeafe; --border:#e2e8f0;
-  --done-bg:#ecfdf5; --done-border:#86efac; --done-text:#15803d;
-  color-scheme: light;
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#0f1720; --card:#17212c; --text:#e7edf3; --sub:#90a4b7;
-    --accent:#60a5fa; --accent-soft:#1e3a5f; --border:#273647;
-    --done-bg:#0f2a1e; --done-border:#1f6b43; --done-text:#4ade80;
-    color-scheme: dark;
-  }
-}
-:root[data-theme="dark"]{
-  --bg:#0f1720; --card:#17212c; --text:#e7edf3; --sub:#90a4b7;
-  --accent:#60a5fa; --accent-soft:#1e3a5f; --border:#273647;
-  --done-bg:#0f2a1e; --done-border:#1f6b43; --done-text:#4ade80;
-  color-scheme: dark;
-}
+:root{--bg:#f4f6f8;--card:#ffffff;--text:#15202b;--sub:#5b6b7a;--accent:#2563eb;--accent-soft:#dbeafe;--border:#e2e8f0;--done-bg:#ecfdf5;--done-border:#86efac;--done-text:#15803d;color-scheme:light;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0f1720;--card:#17212c;--text:#e7edf3;--sub:#90a4b7;--accent:#60a5fa;--accent-soft:#1e3a5f;--border:#273647;--done-bg:#0f2a1e;--done-border:#1f6b43;--done-text:#4ade80;color-scheme:dark;}}
 *{box-sizing:border-box;}
-html{scroll-padding-top:env(safe-area-inset-top,0px);}
-body{
-  margin:0; background:var(--bg); color:var(--text);
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
-}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);}
 .wrap{max-width:720px;margin:0 auto;padding:24px 18px 60px;}
+.nav-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+.back-btn{display:inline-flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--border);color:var(--accent);text-decoration:none;font-weight:600;font-size:.88rem;padding:7px 14px;border-radius:999px;}
+.back-btn:active{opacity:.7;}
+.sync-pill{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;color:var(--sub);background:var(--card);border:1px solid var(--border);border-radius:999px;padding:5px 11px;}
+.sync-dot{width:7px;height:7px;border-radius:50%;background:var(--sub);}
+.sync-dot.live{background:#22c55e;box-shadow:0 0 6px #22c55e;}
 header{margin-bottom:18px;}
 h1{font-size:1.4rem;margin:0 0 4px;}
 .sub{color:var(--sub);font-size:.9rem;margin:0;}
-.progress-card{
-  background:var(--card);border:1px solid var(--border);border-radius:14px;
-  padding:16px 18px;margin:18px 0 22px;
-}
+.progress-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px 18px;margin:18px 0 22px;}
 .progress-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;}
 .progress-top .count{font-weight:700;font-size:1.1rem;}
 .bar{height:10px;border-radius:999px;background:var(--border);overflow:hidden;}
 .bar-fill{height:100%;background:var(--accent);width:0%;transition:width .3s ease;border-radius:999px;}
-.day{
-  background:var(--card);border:1px solid var(--border);border-radius:14px;
-  margin-bottom:14px;overflow:hidden;
-}
-.day-head{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:14px 16px;cursor:pointer;user-select:none;
-}
+.day{background:var(--card);border:1px solid var(--border);border-radius:14px;margin-bottom:14px;overflow:hidden;}
+.day-head{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;cursor:pointer;user-select:none;}
 .day-head.exam{background:var(--accent-soft);}
 .day-title{font-weight:700;font-size:1rem;}
 .day-date{color:var(--sub);font-size:.82rem;font-weight:500;}
-.day-badge{
-  font-size:.78rem;color:var(--sub);background:var(--bg);
-  border:1px solid var(--border);border-radius:999px;padding:3px 10px;white-space:nowrap;
-}
+.day-badge{font-size:.78rem;color:var(--sub);background:var(--bg);border:1px solid var(--border);border-radius:999px;padding:3px 10px;white-space:nowrap;}
 .day-body{padding:0 16px 14px;}
-.item{
-  display:flex;align-items:flex-start;gap:10px;padding:9px 0;
-  border-top:1px solid var(--border);
-}
+.item{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-top:1px solid var(--border);}
 .item:first-child{border-top:none;}
 .item input{margin-top:3px;width:18px;height:18px;flex:none;accent-color:var(--accent);}
 .item label{flex:1;font-size:.93rem;line-height:1.4;cursor:pointer;}
 .item.done label{color:var(--done-text);text-decoration:line-through;text-decoration-color:var(--done-border);}
-.dept{
-  display:inline-block;font-size:.72rem;font-weight:700;color:var(--accent);
-  background:var(--accent-soft);border-radius:6px;padding:1px 7px;margin-right:7px;
-}
+.dept{display:inline-block;font-size:.72rem;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:6px;padding:1px 7px;margin-right:7px;}
 .exam-note{color:var(--sub);font-size:.9rem;padding:4px 0 10px;}
-.reset{
-  display:block;margin:20px auto 0;background:none;border:1px solid var(--border);
-  color:var(--sub);padding:8px 16px;border-radius:999px;font-size:.82rem;cursor:pointer;
-}
-.reset:active{opacity:.7;}
+.reset{display:block;margin:20px auto 0;background:none;border:1px solid var(--border);color:var(--sub);padding:8px 16px;border-radius:999px;font-size:.82rem;cursor:pointer;}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <header>
-    <h1>Respiratory Mid — Study Tracker</h1>
-    <p class="sub">Exam: Sunday, Dec 6, 2026 · 20 lectures · 10 days</p>
-  </header>
-
-  <div class="progress-card">
-    <div class="progress-top">
-      <span class="sub">Overall progress</span>
-      <span class="count"><span id="doneCount">0</span>/20 lectures</span>
-    </div>
-    <div class="bar"><div class="bar-fill" id="barFill"></div></div>
+  <div class="nav-top">
+    <a href="index.html" class="back-btn">← Study Hub</a>
+    <div class="sync-pill"><span id="syncDot" class="sync-dot"></span><span id="syncStatus">Syncing...</span></div>
   </div>
-
+  <header><h1>Respiratory Mid — Study Tracker</h1><p class="sub">Exam: Sunday, Dec 6, 2026 · 20 lectures · 10 days</p></header>
+  <div class="progress-card"><div class="progress-top"><span class="sub">Overall progress</span><span class="count"><span id="doneCount">0</span>/<span id="totalCount">21</span> lectures</span></div><div class="bar"><div class="bar-fill" id="barFill"></div></div></div>
   <div id="days"></div>
-
   <button class="reset" onclick="resetAll()">Reset progress</button>
 </div>
-
 <script>
 const PLAN = [
-  { date: "Fri Nov 27", title: "Day 1 — Anatomy", items: [
-    { dept:"Anatomy", text:"1. Nasal cavity & paranasal sinus, nasopharynx, larynx" },
-    { dept:"Anatomy", text:"2. Anatomy of the lung" },
-    { dept:"Anatomy", text:"3. Tutorial 1 — trachea & bronchi" },
-  ]},
-  { date: "Sat Nov 28", title: "Day 2 — Histology + Physiology", items: [
-    { dept:"Histology", text:"4. Histology of the conducting parts of the respiratory system" },
-    { dept:"Physiology", text:"5. Mechanics of ventilation" },
-    { dept:"Physiology", text:"6. Neural control of breathing" },
-  ]},
-  { date: "Sun Nov 29", title: "Day 3 — Physiology", items: [
-    { dept:"Physiology", text:"7. Chemical control of breathing" },
-    { dept:"Physiology", text:"8. Gas exchange across the pulmonary membrane" },
-  ]},
-  { date: "Mon Nov 30", title: "Day 4 — Physiology", items: [
-    { dept:"Physiology", text:"9. Oxygen transport in the blood" },
-    { dept:"Physiology", text:"10. Carbon dioxide transport in the blood" },
-  ]},
-  { date: "Tue Dec 1", title: "Day 5 — Biochemistry", items: [
-    { dept:"Biochem", text:"11. Acid-base balance & anion gap" },
-    { dept:"Biochem", text:"12. Metabolic function of the respiratory system" },
-  ]},
-  { date: "Wed Dec 2", title: "Day 6 — Pathology", items: [
-    { dept:"Pathology", text:"13. Upper respiratory diseases (1)" },
-    { dept:"Pathology", text:"14. Upper respiratory diseases (2)" },
-  ]},
-  { date: "Thu Dec 3", title: "Day 7 — Microbiology", items: [
-    { dept:"Micro", text:"15. URTI — Group A beta-hemolytic strep, diphtheria" },
-    { dept:"Micro", text:"16. Bordetella pertussis, H. influenzae, Vincent angina" },
-  ]},
-  { date: "Fri Dec 4", title: "Day 8 — Microbiology + Pharmacology", items: [
-    { dept:"Micro", text:"17. LRTI — Strep pneumoniae & Klebsiella pneumoniae" },
-    { dept:"Micro", text:"18. Mycobacterium tuberculosis" },
-    { dept:"Pharm", text:"19. Treatment of tuberculosis" },
-  ]},
-  { date: "Sat Dec 5", title: "Day 9 — Pharmacology + Full Review", items: [
-    { dept:"Pharm", text:"20. Treatment of viral & fungal chest infection" },
-    { dept:"Review", text:"Full pass: flashcards/MCQs on all 20 lectures, flag weak spots" },
-  ]},
+  { date:"Fri Nov 27", title:"Day 1 — Anatomy", items:[{dept:"Anatomy",text:"1. Nasal cavity & paranasal sinus, nasopharynx, larynx"},{dept:"Anatomy",text:"2. Anatomy of the lung"},{dept:"Anatomy",text:"3. Tutorial 1 — trachea & bronchi"}]},
+  { date:"Sat Nov 28", title:"Day 2 — Histology + Physiology", items:[{dept:"Histology",text:"4. Histology of the conducting parts of the respiratory system"},{dept:"Physiology",text:"5. Mechanics of ventilation"},{dept:"Physiology",text:"6. Neural control of breathing"}]},
+  { date:"Sun Nov 29", title:"Day 3 — Physiology", items:[{dept:"Physiology",text:"7. Chemical control of breathing"},{dept:"Physiology",text:"8. Gas exchange across the pulmonary membrane"}]},
+  { date:"Mon Nov 30", title:"Day 4 — Physiology", items:[{dept:"Physiology",text:"9. Oxygen transport in the blood"},{dept:"Physiology",text:"10. Carbon dioxide transport in the blood"}]},
+  { date:"Tue Dec 1", title:"Day 5 — Biochemistry", items:[{dept:"Biochem",text:"11. Acid-base balance & anion gap"},{dept:"Biochem",text:"12. Metabolic function of the respiratory system"}]},
+  { date:"Wed Dec 2", title:"Day 6 — Pathology", items:[{dept:"Pathology",text:"13. Upper respiratory diseases (1)"},{dept:"Pathology",text:"14. Upper respiratory diseases (2)"}]},
+  { date:"Thu Dec 3", title:"Day 7 — Microbiology", items:[{dept:"Micro",text:"15. URTI — Group A beta-hemolytic strep, diphtheria"},{dept:"Micro",text:"16. Bordetella pertussis, H. influenzae, Vincent angina"}]},
+  { date:"Fri Dec 4", title:"Day 8 — Microbiology + Pharmacology", items:[{dept:"Micro",text:"17. LRTI — Strep pneumoniae & Klebsiella pneumoniae"},{dept:"Micro",text:"18. Mycobacterium tuberculosis"},{dept:"Pharm",text:"19. Treatment of tuberculosis"}]},
+  { date:"Sat Dec 5", title:"Day 9 — Pharmacology + Full Review", items:[{dept:"Pharm",text:"20. Treatment of viral & fungal chest infection"},{dept:"Review",text:"Full pass: flashcards/MCQs on all 20 lectures, flag weak spots"}]},
 ];
-
 const EXAM_DAY = { date:"Sun Dec 6", title:"Exam Day", note:"Light review of flagged weak spots only — no new material." };
-
-const TOTAL_LECTURES = 20;
 const STORE_KEY = "resp-mid-tracker-v1";
-
-function loadState(){
-  try{
-    const raw = localStorage.getItem(STORE_KEY);
-    return raw ? JSON.parse(raw) : {};
-  }catch(e){ return {}; }
-}
-function saveState(state){
-  try{ localStorage.setItem(STORE_KEY, JSON.stringify(state)); }catch(e){}
-}
-
-let state = loadState();
+const TOTAL_ITEMS = PLAN.reduce((s, d) => s + d.items.length, 0);
+let state = JSON.parse(localStorage.getItem(STORE_KEY) || "{}");
+let cloudSave = null;
 
 function render(){
   const daysEl = document.getElementById('days');
   daysEl.innerHTML = '';
   PLAN.forEach((day, di) => {
-    const card = document.createElement('div');
-    card.className = 'day';
-    const head = document.createElement('div');
-    head.className = 'day-head';
-    head.innerHTML = `<div><div class="day-title">${day.title}</div><div class="day-date">${day.date}</div></div><div class="day-badge">${day.items.length} item${day.items.length>1?'s':''}</div>`;
-    const body = document.createElement('div');
-    body.className = 'day-body';
+    const card = document.createElement('div'); card.className = 'day';
+    card.innerHTML = `<div class="day-head"><div><div class="day-title">${day.title}</div><div class="day-date">${day.date}</div></div><div class="day-badge">${day.items.length} item${day.items.length>1?'s':''}</div></div>`;
+    const body = document.createElement('div'); body.className = 'day-body';
     day.items.forEach((it, ii) => {
       const id = `d${di}-i${ii}`;
-      const row = document.createElement('div');
-      row.className = 'item' + (state[id] ? ' done' : '');
-      row.innerHTML = `<input type="checkbox" id="${id}" ${state[id]?'checked':''}>
-        <label for="${id}"><span class="dept">${it.dept}</span>${it.text}</label>`;
+      const row = document.createElement('div'); row.className = 'item' + (state[id] ? ' done' : '');
+      row.innerHTML = `<input type="checkbox" id="${id}" ${state[id]?'checked':''}><label for="${id}"><span class="dept">${it.dept}</span>${it.text}</label>`;
       body.appendChild(row);
     });
-    card.appendChild(head);
-    card.appendChild(body);
-    daysEl.appendChild(card);
+    card.appendChild(body); daysEl.appendChild(card);
   });
-
-  // exam day card
-  const examCard = document.createElement('div');
-  examCard.className = 'day';
-  examCard.innerHTML = `<div class="day-head exam"><div><div class="day-title">${EXAM_DAY.title}</div><div class="day-date">${EXAM_DAY.date}</div></div></div>
-    <div class="day-body"><div class="exam-note">${EXAM_DAY.note}</div></div>`;
+  const examCard = document.createElement('div'); examCard.className = 'day';
+  examCard.innerHTML = `<div class="day-head exam"><div><div class="day-title">${EXAM_DAY.title}</div><div class="day-date">${EXAM_DAY.date}</div></div></div><div class="day-body"><div class="exam-note">${EXAM_DAY.note}</div></div>`;
   daysEl.appendChild(examCard);
-
   daysEl.querySelectorAll('input[type=checkbox]').forEach(cb => {
     cb.addEventListener('change', () => {
-      state[cb.id] = cb.checked;
-      saveState(state);
-      updateProgress();
-      cb.closest('.item').classList.toggle('done', cb.checked);
+      state[cb.id] = cb.checked; localStorage.setItem(STORE_KEY, JSON.stringify(state));
+      updateProgress(); cb.closest('.item').classList.toggle('done', cb.checked);
+      if (cloudSave) cloudSave(state);
     });
   });
-
   updateProgress();
 }
-
 function updateProgress(){
-  const total = PLAN.reduce((s,d)=>s+d.items.length,0);
+  document.getElementById('totalCount').textContent = TOTAL_ITEMS;
   const done = Object.values(state).filter(Boolean).length;
   document.getElementById('doneCount').textContent = done;
-  document.getElementById('barFill').style.width = (total? (done/total*100):0) + '%';
+  document.getElementById('barFill').style.width = (TOTAL_ITEMS ? (done / TOTAL_ITEMS * 100) : 0) + '%';
 }
-
 function resetAll(){
-  if(confirm('Clear all checked progress?')){
-    state = {};
-    saveState(state);
-    render();
-  }
+  if(confirm('Clear all checked progress?')){ state = {}; localStorage.setItem(STORE_KEY, "{}"); render(); if (cloudSave) cloudSave(state); }
 }
-
 render();
+
+firebase.initializeApp({
+  apiKey: "AIzaSyCxtO8FdhPF-4qacnMIOtzCRP30KeZ3sYo",
+  authDomain: "://firebaseapp.com",
+  projectId: "uni-study-tracker-58dd0",
+  storageBucket: "uni-study-tracker-58dd0.firebasestorage.app",
+  messagingSenderId: "16736564692",
+  appId: "1:16736564692:web:8c8300a0833c790d84d241"
+});
+const trackerRef = firebase.firestore().collection("studyData").doc("tracker");
+cloudSave = (st) => trackerRef.set({ checked: st, total: TOTAL_ITEMS }, { merge: true });
+trackerRef.onSnapshot((snap) => {
+  document.getElementById("syncDot").classList.add("live");
+  document.getElementById("syncStatus").textContent = "Synced";
+  if (snap.exists && snap.data().checked) { state = snap.data().checked; localStorage.setItem(STORE_KEY, JSON.stringify(state)); render(); }
+  else if (Object.keys(state).length > 0) { cloudSave(state); }
+}, (err) => { document.getElementById("syncStatus").textContent = "Error: " + err.code; });
 </script>
 </body>
 </html>
