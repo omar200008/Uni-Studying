@@ -10,64 +10,80 @@
 <link rel="apple-touch-icon" href="icon.png?v=3" />
 <link rel="icon" type="image/png" href="icon.png?v=3" />
 <style>
-:root{--bg:#090d16;--card:#131b2e;--card2:#1a243d;--border:#24314d;--text:#f8fafc;--muted:#8b9bb4;--accent:#38bdf8;--green:#22c55e;--amber:#f59e0b;}
-:root.light{--bg:#f4f6f9;--card:#ffffff;--card2:#eef2f7;--border:#dce3ec;--text:#0f172a;--muted:#5b6b7a;--accent:#2563eb;--green:#16a34a;--amber:#d97706;}
+:root{--bg:#060911;--card:#111827;--card2:#1e293b;--border:#334155;--text:#ffffff;--muted:#94a3b8;--accent:#38bdf8;--green:#22c55e;--amber:#fbbf24;--shadow:0 8px 24px rgba(0,0,0,.45);}
+:root.light{--bg:#eef2f6;--card:#ffffff;--card2:#f1f5f9;--border:#cbd5e1;--text:#090d16;--muted:#475569;--accent:#0284c7;--green:#16a34a;--amber:#d97706;--shadow:0 4px 14px rgba(15,23,42,.08);}
 *{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,sans-serif;}
-body{background:var(--bg);color:var(--text);padding:calc(16px + env(safe-area-inset-top)) 16px 70px;max-width:860px;margin:0 auto;transition:background .2s,color .2s;}
-.topbar{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;padding-bottom:14px;border-bottom:1px solid var(--border);margin-bottom:14px;}
-.brand h1{font-size:1.15rem;font-weight:800;letter-spacing:-.01em;display:flex;align-items:center;gap:7px;}
-.vtag{font-size:.68rem;background:rgba(56,189,248,.16);color:var(--accent);padding:2px 7px;border-radius:6px;}
-.brand p{font-size:.75rem;color:var(--muted);}
+body{background:var(--bg);color:var(--text);padding:calc(16px + env(safe-area-inset-top)) 16px 80px;max-width:900px;margin:0 auto;transition:background .2s,color .2s;}
+.topbar{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;padding-bottom:14px;border-bottom:1px solid var(--border);margin-bottom:12px;}
+.brand h1{font-size:1.18rem;font-weight:800;letter-spacing:-.01em;display:flex;align-items:center;gap:8px;}
+.vtag{font-size:.68rem;background:rgba(56,189,248,.16);color:var(--accent);border:1px solid var(--accent);padding:2px 8px;border-radius:6px;}
+.brand p{font-size:.75rem;color:var(--muted);margin-top:2px;}
 .tcontrols{display:flex;flex-wrap:wrap;align-items:center;gap:8px;}
-.stat-pill{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);padding:5px 12px;border-radius:999px;font-size:.76rem;}
-.tbtn{background:var(--card);border:1px solid var(--border);color:var(--text);padding:6px 11px;border-radius:999px;font-size:.76rem;font-weight:600;cursor:pointer;}
-.tbtn.blue{background:var(--accent);color:#fff;border-color:var(--accent);}
-.dot{width:7px;height:7px;border-radius:50%;background:var(--muted);display:inline-block;}
-.dot.live{background:var(--green);box-shadow:0 0 7px var(--green);}
-.search-wrap{position:relative;margin-bottom:14px;}
-.search-in{width:100%;background:var(--card);border:1px solid var(--border);color:var(--text);padding:10px 14px;border-radius:12px;font-size:.88rem;}
-.search-res{background:var(--card);border:1px solid var(--accent);border-radius:12px;padding:10px;margin-top:6px;display:none;}
-.strip{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;margin-bottom:16px;scrollbar-width:none;}
+.stat-pill{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);padding:5px 12px;border-radius:999px;font-size:.76rem;font-weight:700;box-shadow:var(--shadow);}
+.ring-wrap{display:flex;align-items:center;gap:6px;}
+.tbtn{background:var(--card);border:1px solid var(--border);color:var(--text);padding:6px 12px;border-radius:999px;font-size:.76rem;font-weight:700;cursor:pointer;}
+.tbtn.blue{background:var(--accent);color:#060911;border-color:var(--accent);}
+:root.light .tbtn.blue{color:#fff;}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--muted);display:inline-block;}
+.dot.live{background:var(--green);box-shadow:0 0 8px var(--green);}
+.nav-bar{display:flex;gap:6px;overflow-x:auto;padding:2px 0 10px;scrollbar-width:none;}
+.nav-bar::-webkit-scrollbar{display:none;}
+.nav-pill{background:var(--card);border:1px solid var(--border);color:var(--muted);padding:6px 13px;border-radius:11px;font-size:.78rem;font-weight:700;cursor:pointer;white-space:nowrap;}
+.nav-pill.active{background:var(--accent);color:#060911;border-color:var(--accent);}
+:root.light .nav-pill.active{color:#fff;}
+.search-in{width:100%;background:var(--card);border:1.5px solid var(--border);color:var(--text);padding:10px 14px;border-radius:12px;font-size:.88rem;margin-bottom:12px;}
+.search-res{background:var(--card);border:1.5px solid var(--accent);border-radius:12px;padding:8px;margin:-6px 0 12px;display:none;box-shadow:var(--shadow);}
+.strip{display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;margin-bottom:16px;scrollbar-width:none;}
 .strip::-webkit-scrollbar{display:none;}
-.chip{flex:0 0 auto;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:10px 14px;min-width:142px;cursor:pointer;}
+.chip{flex:0 0 auto;background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:10px 14px;min-width:144px;cursor:pointer;box-shadow:var(--shadow);}
 .chip.past{opacity:.45;}
-.cdays{font-size:.98rem;font-weight:800;color:var(--accent);}
-.cname{font-size:.78rem;font-weight:700;margin-top:2px;}
-.cdate{font-size:.7rem;color:var(--muted);}
-.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:14px;}
+.cdays{font-size:1.02rem;font-weight:800;}
+.cname{font-size:.8rem;font-weight:700;margin-top:2px;}
+.cdate{font-size:.72rem;color:var(--muted);}
+.card{background:var(--card);border:1.5px solid var(--border);border-radius:18px;padding:16px;margin-bottom:14px;box-shadow:var(--shadow);}
 .sec-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
-.sec-h h2{font-size:.82rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:12px;}
-.mcard{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;cursor:pointer;transition:transform .15s,border-color .15s;}
-.mcard:hover{border-color:var(--accent);transform:translateY(-1px);}
-.bar{height:7px;background:var(--card2);border-radius:999px;overflow:hidden;margin:10px 0 8px;}
-.fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--green));transition:width .25s;}
-.tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:12px;}
-.tab{background:var(--card2);border:1px solid var(--border);color:var(--muted);padding:6px 12px;border-radius:999px;font-size:.78rem;font-weight:600;cursor:pointer;white-space:nowrap;}
-.tab.on{background:var(--accent);color:#fff;border-color:var(--accent);}
-.item{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:11px 13px;margin-bottom:8px;}
-.item.done{opacity:.65;border-color:rgba(34,197,94,.4);}
-.passes{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:8px;}
-.pbox{display:flex;align-items:center;justify-content:center;gap:4px;background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:5px;font-size:.72rem;cursor:pointer;}
-.pbox.on{border-color:var(--green);color:var(--green);font-weight:700;}
-.tag{font-size:.68rem;font-weight:700;color:var(--accent);background:rgba(56,189,248,.14);padding:2px 7px;border-radius:6px;}
-.star{background:none;border:none;font-size:1.05rem;cursor:pointer;color:var(--muted);}
+.sec-h h2{font-size:.8rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;}
+.mcard{background:var(--card);border:1.5px solid var(--border);border-radius:18px;padding:16px;cursor:pointer;box-shadow:var(--shadow);transition:transform .15s;}
+.mcard:hover{transform:translateY(-2px);}
+.bar{height:8px;background:var(--card2);border-radius:999px;overflow:hidden;margin:10px 0 8px;}
+.fill{height:100%;transition:width .25s;}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:8px;margin-bottom:10px;}
+.tab{background:var(--card);border:1.5px solid var(--border);color:var(--muted);padding:6px 12px;border-radius:999px;font-size:.78rem;font-weight:700;cursor:pointer;white-space:nowrap;}
+.tab.on{color:#fff;}
+.lec-card{border:1.5px solid var(--sc);background:linear-gradient(135deg,var(--sc-bg),var(--card) 55%);border-radius:14px;padding:12px 14px;margin-bottom:9px;box-shadow:var(--shadow);}
+.lec-card.done{opacity:.72;}
+.main-chk{width:20px;height:20px;border-radius:6px;border:2px solid var(--sc);display:inline-flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:800;cursor:pointer;flex-shrink:0;color:#fff;}
+.main-chk.on{background:var(--sc);}
+.num-pill{font-size:.7rem;font-weight:800;color:var(--sc);background:var(--sc-bg);border:1px solid var(--sc);padding:2px 7px;border-radius:6px;}
+.subj-pill{font-size:.7rem;font-weight:800;color:#fff;background:var(--sc);padding:2px 8px;border-radius:6px;}
+.passes{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:9px;}
+.pbox{display:flex;align-items:center;justify-content:center;gap:5px;background:var(--card2);border:1.5px solid var(--border);border-radius:9px;padding:6px 4px;font-size:.74rem;font-weight:700;cursor:pointer;user-select:none;}
+.pbox.on{background:var(--sc);border-color:var(--sc);color:#fff;}
+.star{background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--muted);}
 .star.on{color:var(--amber);}
+.grp-box{border:1.5px solid var(--sc);border-radius:16px;padding:12px;margin-bottom:14px;background:var(--card);}
+.grp-head{display:flex;justify-content:space-between;align-items:center;cursor:pointer;padding:4px 2px 10px;color:var(--sc);font-weight:800;font-size:.92rem;}
 </style>
 </head>
 <body>
-
-  <div class="topbar">
+<div class="topbar">
   <div class="brand">
-    <h1>STUDY HUB WORKSPACE <span class="vtag">V7 SMART</span></h1>
+    <h1>STUDY HUB WORKSPACE <span class="vtag">SMART</span></h1>
     <p><span id="dot" class="dot"></span> <span id="syncTxt">Syncing...</span> · <span id="paceGlobal">Smart Engine Active</span></p>
   </div>
   <div class="tcontrols">
     <div class="stat-pill">
       <span>🔥 <b id="streakNum">1</b>d streak</span>
-      <span>🎯 <b id="goalNum">0/5</b> today</span>
+      <div class="ring-wrap">
+        <svg width="22" height="22" viewBox="0 0 36 36">
+          <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="var(--border)" stroke-width="4"/>
+          <path id="goalArc" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="var(--green)" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+        <span><b id="goalNum">0/5</b> today</span>
+      </div>
     </div>
-    <button class="tbtn" id="themeBtn">☀️/🌙</button>
+    <button class="tbtn" id="themeBtn">☀️ / 🌙</button>
     <button class="tbtn" id="refreshBtn">↻</button>
     <button class="tbtn" id="impBtn">↑ Import</button>
     <button class="tbtn blue" id="expBtn">↓ Backup</button>
@@ -75,15 +91,31 @@ body{background:var(--bg);color:var(--text);padding:calc(16px + env(safe-area-in
   </div>
 </div>
 
-<div class="search-wrap">
-  <input class="search-in" id="searchIn" placeholder="🔍 Global Search across all lectures, practicals, summaries & PDFs..." />
-  <div class="search-res" id="searchRes"></div>
-</div>
-
+<div class="nav-bar" id="navBar"></div>
+<input class="search-in" id="searchIn" placeholder="🔍 Global Search across all lectures, practicals, summaries & PDFs..." />
+<div class="search-res" id="searchRes"></div>
 <div class="strip" id="cdStrip"></div>
 <div id="viewRoot"></div>
 
 <script>
+const SUBJ_COLORS = {
+  Anatomy: { c:"#ef4444", bg:"rgba(239,68,68,.14)" },
+  Physiology: { c:"#a855f7", bg:"rgba(168,85,247,.14)" },
+  Pathology: { c:"#be123c", bg:"rgba(190,18,60,.16)" },
+  Patho: { c:"#be123c", bg:"rgba(190,18,60,.16)" },
+  Biochem: { c:"#eab308", bg:"rgba(234,179,8,.15)" },
+  Histology: { c:"#ec4899", bg:"rgba(236,72,153,.14)" },
+  Pharma: { c:"#3b82f6", bg:"rgba(59,130,246,.14)" },
+  Pharm: { c:"#3b82f6", bg:"rgba(59,130,246,.14)" },
+  Micro: { c:"#10b981", bg:"rgba(16,185,129,.14)" },
+  Para: { c:"#f97316", bg:"rgba(249,115,22,.14)" },
+  Cardiology: { c:"#6366f1", bg:"rgba(99,102,241,.14)" },
+  Chest: { c:"#06b6d4", bg:"rgba(6,182,212,.14)" },
+  Clinical: { c:"#14b8a6", bg:"rgba(20,184,166,.14)" },
+  Review: { c:"#8b5cf6", bg:"rgba(139,92,246,.14)" }
+};
+function scStyle(dept) { const s = SUBJ_COLORS[dept] || { c:"#38bdf8", bg:"rgba(56,189,248,.14)" }; return `--sc:${s.c};--sc-bg:${s.bg};`; }
+
 const EXAMS = [
   { id:"ex1", mod:"mod_res", tab:"mid", name:"RES-233 Mid", date:"2026-12-06T09:00:00", label:"Sun, Dec 6" },
   { id:"ex2", mod:"mod_res", tab:"prac", name:"RES-233 Practical", date:"2026-12-19T09:00:00", label:"Sat, Dec 19" },
@@ -94,184 +126,195 @@ const EXAMS = [
   { id:"ex7", mod:"mod_cvs", tab:"lec", name:"CVS-232 Final", date:"2027-01-17T09:00:00", label:"Sun, Jan 17" },
   { id:"ex8", mod:"mod_hps", tab:"lec", name:"HPS-231 Final", date:"2027-01-21T09:00:00", label:"Thu, Jan 21" }
 ];
-
-  const RES_MID = [
-  { day:"Day 1 · Fri Nov 27", items:[["Anatomy","1. Nasal cavity & paranasal sinus, nasopharynx, larynx"],["Anatomy","2. Anatomy of the lung"],["Anatomy","3. Tutorial 1 — trachea & bronchi"]]},
-  { day:"Day 2 · Sat Nov 28", items:[["Histology","4. Histology of conducting parts of respiratory system"],["Physiology","5. Mechanics of ventilation"],["Physiology","6. Neural control of breathing"]]},
-  { day:"Day 3 · Sun Nov 29", items:[["Physiology","7. Chemical control of breathing"],["Physiology","8. Gas exchange across the pulmonary membrane"]]},
-  { day:"Day 4 · Mon Nov 30", items:[["Physiology","9. Oxygen transport in the blood"],["Physiology","10. Carbon dioxide transport in the blood"]]},
-  { day:"Day 5 · Tue Dec 1", items:[["Biochem","11. Acid-base balance & anion gap"],["Biochem","12. Metabolic function of respiratory system"]]},
-  { day:"Day 6 · Wed Dec 2", items:[["Pathology","13. Upper respiratory diseases (1)"],["Pathology","14. Upper respiratory diseases (2)"]]},
-  { day:"Day 7 · Thu Dec 3", items:[["Micro","15. URTI — Group A beta-hemolytic strep, diphtheria"],["Micro","16. Bordetella pertussis, H. influenzae, Vincent angina"]]},
-  { day:"Day 8 · Fri Dec 4", items:[["Micro","17. LRTI — Strep pneumoniae & Klebsiella pneumoniae"],["Micro","18. Mycobacterium tuberculosis"],["Pharm","19. Treatment of tuberculosis"]]},
-  { day:"Day 9 · Sat Dec 5", items:[["Pharm","20. Treatment of viral & fungal chest infection"],["Review","21. Full pass: flashcards/MCQs on all 20 lectures, flag weak spots"]]}
+const RES_MID = [
+  { day:"Day 1 · Fri Nov 27", items:[{d:"Anatomy",t:"1. Nasal cavity & paranasal sinus, nasopharynx, larynx"},{d:"Anatomy",t:"2. Anatomy of the lung"},{d:"Anatomy",t:"3. Tutorial 1 — trachea & bronchi"}]},
+  { day:"Day 2 · Sat Nov 28", items:[{d:"Histology",t:"4. Histology of conducting parts of respiratory system"},{d:"Physiology",t:"5. Mechanics of ventilation"},{d:"Physiology",t:"6. Neural control of breathing"}]},
+  { day:"Day 3 · Sun Nov 29", items:[{d:"Physiology",t:"7. Chemical control of breathing"},{d:"Physiology",t:"8. Gas exchange across the pulmonary membrane"}]},
+  { day:"Day 4 · Mon Nov 30", items:[{d:"Physiology",t:"9. Oxygen transport in the blood"},{d:"Physiology",t:"10. Carbon dioxide transport in the blood"}]},
+  { day:"Day 5 · Tue Dec 1", items:[{d:"Biochem",t:"11. Acid-base balance & anion gap"},{d:"Biochem",t:"12. Metabolic function of respiratory system"}]},
+  { day:"Day 6 · Wed Dec 2", items:[{d:"Pathology",t:"13. Upper respiratory diseases (1)"},{d:"Pathology",t:"14. Upper respiratory diseases (2)"}]},
+  { day:"Day 7 · Thu Dec 3", items:[{d:"Micro",t:"15. URTI — Group A beta-hemolytic strep, diphtheria"},{d:"Micro",t:"16. Bordetella pertussis, H. influenzae, Vincent angina"}]},
+  { day:"Day 8 · Fri Dec 4", items:[{d:"Micro",t:"17. LRTI — Strep pneumoniae & Klebsiella pneumoniae"},{d:"Micro",t:"18. Mycobacterium tuberculosis"},{d:"Pharm",t:"19. Treatment of tuberculosis"}]},
+  { day:"Day 9 · Sat Dec 5", items:[{d:"Pharm",t:"20. Treatment of viral & fungal chest infection"},{d:"Review",t:"21. Full pass: flashcards/MCQs on all 20 lectures, flag weak spots"}]}
 ];
 
 const RES_PRAC = [
-  ["Anatomy","P1: Bones of the thoracic cage"],["Anatomy","P2: Anatomy of intercostal space & diaphragm"],["Anatomy","P3: Nasal cavity, pharynx, larynx & trachea sagittal section"],["Anatomy","P4: Anatomy of the lung"],
-  ["Histology","P1: Trachea, fetal lung and adult lung"],["Biochem","P1: Determination of pH"],
-  ["Micro","P1: Streptococci, Diphtheria, B. anthracis, Y. pestis"],["Micro","P2: Mycobacterium tuberculosis, Klebsiella pneumoniae"],["Micro","P3: Diagnosis of viral & fungal RTI"],
-  ["Para","P1: Echinococcus granulosus"],["Para","P2: Larvae affecting the lung"],
-  ["Patho","P1: Non-neoplastic lesions of respiratory system"],["Patho","P2: Neoplastic lesions of respiratory system"],
-  ["Pharma","P1: Effect of drugs on isolated guinea pig trachea"]
+  {d:"Anatomy",t:"P1: Bones of the thoracic cage"},{d:"Anatomy",t:"P2: Anatomy of intercostal space & diaphragm"},{d:"Anatomy",t:"P3: Nasal cavity, pharynx, larynx & trachea sagittal section"},{d:"Anatomy",t:"P4: Anatomy of the lung"},
+  {d:"Histology",t:"P1: Trachea, fetal lung and adult lung"},{d:"Biochem",t:"P1: Determination of pH"},
+  {d:"Micro",t:"P1: Streptococci, Diphtheria, B. anthracis, Y. pestis"},{d:"Micro",t:"P2: Mycobacterium tuberculosis, Klebsiella pneumoniae"},{d:"Micro",t:"P3: Diagnosis of viral & fungal RTI"},
+  {d:"Para",t:"P1: Echinococcus granulosus"},{d:"Para",t:"P2: Larvae affecting the lung"},
+  {d:"Patho",t:"P1: Non-neoplastic lesions of respiratory system"},{d:"Patho",t:"P2: Neoplastic lesions of respiratory system"},
+  {d:"Pharma",t:"P1: Effect of drugs on isolated guinea pig trachea"}
 ];
 const MODS = [
-  { id:"mod_res", code:"RES-233", folder:"res", name:"Respiratory System", exam:"2027-01-10", sub:"Mid: Dec 6 · Prac: Dec 19 · Final: Jan 10", staticGuides:[{title:"Respiratory Anatomy Guide",href:"anatomy.html"},{title:"Respiratory Histology Guide",href:"histology.html"}],
-    items:[["Anatomy","L1: Nasal cavity, paranasal sinus, nasopharynx, larynx"],["Anatomy","L2: Anatomy of the lung"],["Anatomy","TUT1: Anatomy of pharynx, larynx & trachea"],["Anatomy","TUT2: Development & anomalies of respiratory system"],["Anatomy","TUT3: Anatomy of the pleura"],["Histology","L1: Histology of respiratory parts"],["Histology","L2: Histology of conducting parts"],["Biochem","L1: Acid base balance & anion gap"],["Biochem","TUT1: Bio-metabolic function of respiratory system"],["Biochem","TUT2: Lung surfactant & L/S ratio, Hb-O2 binding"],["Physiology","L1: Mechanics of breathing"],["Physiology","L2: Gas diffusion & regional blood flow"],["Physiology","L3: Chemical control of breathing"],["Physiology","L4: Neural control of breathing"],["Physiology","L5: Transport of CO2 in blood"],["Physiology","L6: Transport of O2 in blood"],["Physiology","TUT1: Pressure-volume relationship"],["Physiology","TUT2: Static lung volumes & capacities"],["Physiology","TUT3: Dynamic lung volumes & PFTs"],["Physiology","TUT4: Hypoxia and cyanosis"],["Physiology","TUT5: Special PFTs: MVV, FEV1"],["Micro","L1: URTI: Group A strep, Diphtheria"],["Micro","L2: Bordetella pertussis, H. influenzae, Vincent angina"],["Micro","L3: Mycobacterium tuberculosis"],["Micro","L4: LRTI: Strep & Klebsiella pneumoniae"],["Micro","L5: Viral RTI (1): Influenza, Parainfluenza"],["Micro","L6: Viral RTI (2): Rhino, Adeno, RSV, Corona"],["Micro","TUT1: Fungal: Histoplasma, Aspergillus"],["Para","L1: Paragonimiasis & house dust mites"],["Para","L2: Parasitic larva migrates to lungs"],["Pathology","L1: Upper respiratory diseases (1): nose & pharynx"],["Pathology","L2: Upper respiratory diseases (2): tonsil & larynx"],["Pathology","L3: Pathology of pulmonary microbial infection"],["Pathology","L4: Restrictive lung disease & ARDS"],["Pathology","L5: Chronic obstructive airway disease (1)"],["Pathology","L6: Chronic obstructive airway disease (2)"],["Pathology","L7: Pulmonary neoplasia"],["Pathology","L8: Pleural neoplasia"],["Pharma","L1: Treatment of tuberculosis"],["Pharma","L2: Principles of treatment of pulmonary infections"],["Pharma","L3: Viral & fungal chest infection treatment"],["Pharma","L4: Treatment of bronchial asthma"],["Pharma","TUT1: Therapeutic gases"],["Pharma","TUT2: Anti-cough therapy"],["Chest","CBL1: COPD (chest & pharma)"]] },
-  { id:"mod_cvs", code:"CVS-232", folder:"cvs", name:"Cardiovascular System", exam:"2027-01-17", sub:"Final Exam: Sun, Jan 17, 2027 · 45 Topics", staticGuides:[],
-    items:[["Anatomy","L1: Anatomy of mediastinum & pericardium"],["Anatomy","L2: External features of heart & vessels"],["Anatomy","L3: Internal features of the heart"],["Anatomy","L4: Development of heart & great vessels"],["Anatomy","L5: Anomalies of heart & great vessels"],["Anatomy","TUT: Anatomy of heart & great vessels"],["Histology","L1: Histology of heart & blood vessels"],["Histology","TUT: Histology of special vessels"],["Biochem","L1: Cholesterol structure & metabolism"],["Biochem","L2: Plasma lipoproteins"],["Biochem","TUT: Hypo & hyperlipoproteinemia"],["Physiology","L1: Overview on CVS"],["Physiology","L2: Cardiac properties I"],["Physiology","L3: Cardiac properties II"],["Physiology","L4: Cardiac cycle I"],["Physiology","L5: Cardiac cycle II"],["Physiology","L6: Control of COP"],["Physiology","L7: Physiological variation of ABP"],["Physiology","L8: Regulation of ABP I"],["Physiology","L9: Electrical activity of heart & ECG I"],["Physiology","L10: Electrical activity of heart & ECG II"],["Physiology","L11: Regulation of ABP II"],["Physiology","L12: Capillary circulation & edema"],["Physiology","L13: Venous & lymphatic circulation"],["Physiology","L14: Special circulations: coronary, cerebral, pulmonary"],["Pathology","L1: HTN & effect on CVS"],["Pathology","L2: Ischemic heart diseases"],["Pathology","L3: Rh HD & infective endocarditis"],["Pathology","L4: Myocardial & pericardial disease"],["Pathology","TUT1: Atherosclerosis & aneurysm"],["Pathology","TUT2: Valvular & rheumatic heart disease"],["Pathology","TUT3: Vasculitis & CV Tumors"],["Pharma","L1: Anti-arrhythmic drugs I"],["Pharma","L2: Anti-arrhythmic drugs II"],["Pharma","L3: Antihypertensive drugs I"],["Pharma","L4: Antihypertensive drugs II"],["Pharma","L5: Drugs used in heart failure"],["Pharma","L6: Anti-anginal drugs"],["Pharma","L7: Hypo-lipidemic drugs"],["Pharma","TUT1: Pharmacology treatment of shock"],["Cardiology","L1: Cardiac arrhythmias I"],["Cardiology","L2: Cardiac arrhythmias II"],["Cardiology","CBL1: Cardiac arrhythmias"],["Cardiology","CBL2: Circulatory shock"],["Cardiology","CBL3: Heart failure"]] },
-  { id:"mod_hps", code:"HPS-231", folder:"hps", name:"Hematopoietic System", exam:"2027-01-21", sub:"Final Exam: Thu, Jan 21, 2027 · 24 Topics", staticGuides:[],
-    items:[["Anatomy","L1: Anatomy of lymphatic system"],["Histology","L1: Histology of Blood Cells & Platelets"],["Histology","L2: Histology of lymphatic system I"],["Histology","L3: Histology of lymphatic system II"],["Biochem","L1: RBC metabolism & Haem-synthesis"],["Biochem","L2: Heme catabolism"],["Biochem","CBL: G6PD deficiency (Favism)"],["Physiology","L1: Physiology of RBCs & Hb"],["Physiology","L2: Anemia & Polycythemia"],["Physiology","L3: Hemostasis I"],["Physiology","L4: Hemostasis II"],["Physiology","TUT: Plasma & plasma proteins"],["Physiology","CBL: Iron deficiency Anemia"],["Pathology","L1: Non-neoplastic LN enlargement"],["Pathology","L2: Neoplastic LN enlargement"],["Pathology","TUT: Splenic Mass & cyst"],["Pathology","CBL: Case of lymphadenopathy"],["Pharma","L1: Treatment of anemia"],["Pharma","L2: Anticoagulants"],["Micro","L1: Bacteremia, Typhoid fever"],["Micro","L2: Parvo virus, EBV & Hemorrhagic fevers"],["Micro","TUT: Brucella, Yersinia, Rickettsia & Q fever"],["Para","L1: Malaria"],["Para","L2: Lymphatic filariasis"]] },
-  { id:"mod_bcs", code:"BCS-234", folder:"bcs", name:"Basic Clinical Skills", exam:"2027-01-03", sub:"Mid: Jan 3 · Practical: Jan 4–5, 2027", staticGuides:[], items:[] },
-  { id:"mod_ele", code:"ELE-235", folder:"ele", name:"Elective Course", exam:"2026-12-24", sub:"Final Exam: Thu, Dec 24, 2026", staticGuides:[], items:[] }
+  { id:"mod_res", code:"RES-233", color:"#38bdf8", folder:"res", name:"Respiratory System", exam:"2027-01-10", sub:"Mid: Dec 6 · Prac: Dec 19 · Final: Jan 10", staticGuides:[{title:"Respiratory Anatomy Guide",href:"anatomy.html"},{title:"Respiratory Histology Guide",href:"histology.html"}],
+    items:[{d:"Anatomy",t:"L1: Nasal cavity, paranasal sinus, nasopharynx, larynx"},{d:"Anatomy",t:"L2: Anatomy of the lung"},{d:"Anatomy",t:"TUT1: Anatomy of pharynx, larynx & trachea"},{d:"Anatomy",t:"TUT2: Development & anomalies of respiratory system"},{d:"Anatomy",t:"TUT3: Anatomy of the pleura"},{d:"Histology",t:"L1: Histology of respiratory parts"},{d:"Histology",t:"L2: Histology of conducting parts"},{d:"Biochem",t:"L1: Acid base balance & anion gap"},{d:"Biochem",t:"TUT1: Bio-metabolic function of respiratory system"},{d:"Biochem",t:"TUT2: Lung surfactant & L/S ratio, Hb-O2 binding"},{d:"Physiology",t:"L1: Mechanics of breathing"},{d:"Physiology",t:"L2: Gas diffusion & regional blood flow"},{d:"Physiology",t:"L3: Chemical control of breathing"},{d:"Physiology",t:"L4: Neural control of breathing"},{d:"Physiology",t:"L5: Transport of CO2 in blood"},{d:"Physiology",t:"L6: Transport of O2 in blood"},{d:"Physiology",t:"TUT1: Pressure-volume relationship"},{d:"Physiology",t:"TUT2: Static lung volumes & capacities"},{d:"Physiology",t:"TUT3: Dynamic lung volumes & PFTs"},{d:"Physiology",t:"TUT4: Hypoxia and cyanosis"},{d:"Physiology",t:"TUT5: Special PFTs: MVV, FEV1"},{d:"Micro",t:"L1: URTI: Group A strep, Diphtheria"},{d:"Micro",t:"L2: Bordetella pertussis, H. influenzae, Vincent angina"},{d:"Micro",t:"L3: Mycobacterium tuberculosis"},{d:"Micro",t:"L4: LRTI: Strep & Klebsiella pneumoniae"},{d:"Micro",t:"L5: Viral RTI (1): Influenza, Parainfluenza"},{d:"Micro",t:"L6: Viral RTI (2): Rhino, Adeno, RSV, Corona"},{d:"Micro",t:"TUT1: Fungal: Histoplasma, Aspergillus"},{d:"Para",t:"L1: Paragonimiasis & house dust mites"},{d:"Para",t:"L2: Parasitic larva migrates to lungs"},{d:"Pathology",t:"L1: Upper respiratory diseases (1): nose & pharynx"},{d:"Pathology",t:"L2: Upper respiratory diseases (2): tonsil & larynx"},{d:"Pathology",t:"L3: Pathology of pulmonary microbial infection"},{d:"Pathology",t:"L4: Restrictive lung disease & ARDS"},{d:"Pathology",t:"L5: Chronic obstructive airway disease (1)"},{d:"Pathology",t:"L6: Chronic obstructive airway disease (2)"},{d:"Pathology",t:"L7: Pulmonary neoplasia"},{d:"Pathology",t:"L8: Pleural neoplasia"},{d:"Pharma",t:"L1: Treatment of tuberculosis"},{d:"Pharma",t:"L2: Principles of treatment of pulmonary infections"},{d:"Pharma",t:"L3: Viral & fungal chest infection treatment"},{d:"Pharma",t:"L4: Treatment of bronchial asthma"},{d:"Pharma",t:"TUT1: Therapeutic gases"},{d:"Pharma",t:"TUT2: Anti-cough therapy"},{d:"Chest",t:"CBL1: COPD (chest & pharma)"}] },
+  { id:"mod_cvs", code:"CVS-232", color:"#f43f5e", folder:"cvs", name:"Cardiovascular System", exam:"2027-01-17", sub:"Final Exam: Sun, Jan 17, 2027 · 45 Topics", staticGuides:[],
+    items:[{d:"Anatomy",t:"L1: Anatomy of mediastinum & pericardium"},{d:"Anatomy",t:"L2: External features of heart & vessels"},{d:"Anatomy",t:"L3: Internal features of the heart"},{d:"Anatomy",t:"L4: Development of heart & great vessels"},{d:"Anatomy",t:"L5: Anomalies of heart & great vessels"},{d:"Anatomy",t:"TUT: Anatomy of heart & great vessels"},{d:"Histology",t:"L1: Histology of heart & blood vessels"},{d:"Histology",t:"TUT: Histology of special vessels"},{d:"Biochem",t:"L1: Cholesterol structure & metabolism"},{d:"Biochem",t:"L2: Plasma lipoproteins"},{d:"Biochem",t:"TUT: Hypo & hyperlipoproteinemia"},{d:"Physiology",t:"L1: Overview on CVS"},{d:"Physiology",t:"L2: Cardiac properties I"},{d:"Physiology",t:"L3: Cardiac properties II"},{d:"Physiology",t:"L4: Cardiac cycle I"},{d:"Physiology",t:"L5: Cardiac cycle II"},{d:"Physiology",t:"L6: Control of COP"},{d:"Physiology",t:"L7: Physiological variation of ABP"},{d:"Physiology",t:"L8: Regulation of ABP I"},{d:"Physiology",t:"L9: Electrical activity of heart & ECG I"},{d:"Physiology",t:"L10: Electrical activity of heart & ECG II"},{d:"Physiology",t:"L11: Regulation of ABP II"},{d:"Physiology",t:"L12: Capillary circulation & edema"},{d:"Physiology",t:"L13: Venous & lymphatic circulation"},{d:"Physiology",t:"L14: Special circulations: coronary, cerebral, pulmonary"},{d:"Pathology",t:"L1: HTN & effect on CVS"},{d:"Pathology",t:"L2: Ischemic heart diseases"},{d:"Pathology",t:"L3: Rh HD & infective endocarditis"},{d:"Pathology",t:"L4: Myocardial & pericardial disease"},{d:"Pathology",t:"TUT1: Atherosclerosis & aneurysm"},{d:"Pathology",t:"TUT2: Valvular & rheumatic heart disease"},{d:"Pathology",t:"TUT3: Vasculitis & CV Tumors"},{d:"Pharma",t:"L1: Anti-arrhythmic drugs I"},{d:"Pharma",t:"L2: Anti-arrhythmic drugs II"},{d:"Pharma",t:"L3: Antihypertensive drugs I"},{d:"Pharma",t:"L4: Antihypertensive drugs II"},{d:"Pharma",t:"L5: Drugs used in heart failure"},{d:"Pharma",t:"L6: Anti-anginal drugs"},{d:"Pharma",t:"L7: Hypo-lipidemic drugs"},{d:"Pharma",t:"TUT1: Pharmacology treatment of shock"},{d:"Cardiology",t:"L1: Cardiac arrhythmias I"},{d:"Cardiology",t:"L2: Cardiac arrhythmias II"},{d:"Cardiology",t:"CBL1: Cardiac arrhythmias"},{d:"Cardiology",t:"CBL2: Circulatory shock"},{d:"Cardiology",t:"CBL3: Heart failure"}] },
+  { id:"mod_hps", code:"HPS-231", color:"#8b5cf6", folder:"hps", name:"Hematopoietic System", exam:"2027-01-21", sub:"Final Exam: Thu, Jan 21, 2027 · 24 Topics", staticGuides:[],
+    items:[{d:"Anatomy",t:"L1: Anatomy of lymphatic system"},{d:"Histology",t:"L1: Histology of Blood Cells & Platelets"},{d:"Histology",t:"L2: Histology of lymphatic system I"},{d:"Histology",t:"L3: Histology of lymphatic system II"},{d:"Biochem",t:"L1: RBC metabolism & Haem-synthesis"},{d:"Biochem",t:"L2: Heme catabolism"},{d:"Biochem",t:"CBL: G6PD deficiency (Favism)"},{d:"Physiology",t:"L1: Physiology of RBCs & Hb"},{d:"Physiology",t:"L2: Anemia & Polycythemia"},{d:"Physiology",t:"L3: Hemostasis I"},{d:"Physiology",t:"L4: Hemostasis II"},{d:"Physiology",t:"TUT: Plasma & plasma proteins"},{d:"Physiology",t:"CBL: Iron deficiency Anemia"},{d:"Pathology",t:"L1: Non-neoplastic LN enlargement"},{d:"Pathology",t:"L2: Neoplastic LN enlargement"},{d:"Pathology",t:"TUT: Splenic Mass & cyst"},{d:"Pathology",t:"CBL: Case of lymphadenopathy"},{d:"Pharma",t:"L1: Treatment of anemia"},{d:"Pharma",t:"L2: Anticoagulants"},{d:"Micro",t:"L1: Bacteremia, Typhoid fever"},{d:"Micro",t:"L2: Parvo virus, EBV & Hemorrhagic fevers"},{d:"Micro",t:"TUT: Brucella, Yersinia, Rickettsia & Q fever"},{d:"Para",t:"L1: Malaria"},{d:"Para",t:"L2: Lymphatic filariasis"}] },
+  { id:"mod_bcs", code:"BCS-234", color:"#10b981", folder:"bcs", name:"Basic Clinical Skills", exam:"2027-01-03", sub:"Mid: Jan 3 · Practical: Jan 4–5, 2027", staticGuides:[], items:[] },
+  { id:"mod_ele", code:"ELE-235", color:"#f59e0b", folder:"ele", name:"Elective Course", exam:"2026-12-24", sub:"Final Exam: Thu, Dec 24, 2026", staticGuides:[], items:[] }
 ];
-let store = JSON.parse(localStorage.getItem("v7_hub") || "{}");
+let store = JSON.parse(localStorage.getItem("v9_hub") || localStorage.getItem("v8_hub") || "{}");
 store.checks = store.checks || {}; store.stars = store.stars || {}; store.mid = store.mid || {}; store.prac = store.prac || {}; store.custom = store.custom || {}; store.pdfs = store.pdfs || {};
-let curMod = null, curTab = "lec", filter = "All", cram = false, autoFiles = {}, saveCloud = null;
+let viewMode = "home", curMod = null, curTab = "lec", filter = "All", cram = false, grouped = false, collapsed = {}, autoFiles = {}, saveCloud = null;
 
 if (store.light) document.documentElement.classList.add("light");
 document.getElementById("themeBtn").onclick = () => { document.documentElement.classList.toggle("light"); store.light = document.documentElement.classList.contains("light"); persist(); };
 document.getElementById("refreshBtn").onclick = () => location.reload();
 
-function persist() { localStorage.setItem("v7_hub", JSON.stringify(store)); if (saveCloud) saveCloud(store); render(); }
+function persist() { localStorage.setItem("v9_hub", JSON.stringify(store)); if (saveCloud) saveCloud(store); render(); }
 function daysTo(d) { return Math.max(1, Math.ceil((new Date(d) - Date.now()) / 86400000)); }
-function getItems(m) { return [...m.items.map((x,i)=>({id:`${m.id}_${i}`,num:String(i+1).padStart(2,"0"),dept:x,text:x})), ...(store.custom[m.id]||[])]; }
+function getItems(m) { return [...m.items.map((x,i)=>({id:`${m.id}_${i}`,num:String(i+1).padStart(2,"0"),dept:x.d,text:x.t})), ...(store.custom[m.id]||[])]; }
+
+function renderNav() {
+  const btns = MODS.map(m => `<button class="nav-pill ${viewMode==='mod'&&curMod===m.id?'active':''}" style="${viewMode==='mod'&&curMod===m.id?`background:${m.color};border-color:${m.color};`:''}" onclick="openMod('${m.id}','${m.id==='mod_res'?'mid':'lec'}')">${m.code}</button>`).join("");
+  document.getElementById("navBar").innerHTML = `<button class="nav-pill ${viewMode==='home'?'active':''}" onclick="goHome()">🏠 Home</button><button class="nav-pill ${viewMode==='modules'?'active':''}" onclick="goModules()">📚 Modules</button>${btns}`;
+}
 
 function renderStrip() {
   const now = Date.now();
   document.getElementById("cdStrip").innerHTML = EXAMS.map(e => {
-    const ms = new Date(e.date).getTime() - now;
-    const d = Math.ceil(ms / 86400000);
-    return `<div class="chip ${ms<=0?'past':''}" onclick="openMod('${e.mod}','${e.tab}')"><div class="cdays">${ms<=0?'Done':d+'d left'}</div><div class="cname">${e.name}</div><div class="cdate">${e.label}</div></div>`;
+    const m = MODS.find(x=>x.id===e.mod); const ms = new Date(e.date).getTime() - now; const d = Math.ceil(ms / 86400000);
+    return `<div class="chip ${ms<=0?'past':''}" style="border-top:3px solid ${m.color}" onclick="openMod('${e.mod}','${e.tab}')"><div class="cdays" style="color:${m.color}">${ms<=0?'Done':d+'d left'}</div><div class="cname">${e.name}</div><div class="cdate">${e.label}</div></div>`;
   }).join("");
 }
 
+function renderModCards() {
+  return MODS.map(m => {
+    const its = getItems(m), done = its.filter(it => store.checks[it.id+"_p1"]).length, left = its.length - done;
+    const pace = its.length ? (left / daysTo(m.exam)).toFixed(1) : "0.0", pct = its.length ? Math.round((done/its.length)*100) : 0;
+    return `<div class="mcard" style="border-top:4px solid ${m.color}" onclick="openMod('${m.id}','${m.id==='mod_res'?'mid':'lec'}')">
+      <div style="display:flex;justify-content:space-between;align-items:center;"><span style="background:${m.color};color:#fff;font-size:.7rem;font-weight:800;padding:3px 8px;border-radius:6px;">${m.code}</span><span style="font-size:.76rem;color:${m.color};font-weight:800;">⚡ ${pace}/day</span></div>
+      <h3 style="font-size:1.08rem;margin:8px 0 3px;">${m.name}</h3>
+      <div style="font-size:.78rem;color:var(--muted);">${m.sub}</div>
+      <div class="bar"><div class="fill" style="width:${pct}%;background:${m.color}"></div></div>
+      <div style="display:flex;justify-content:space-between;font-size:.8rem;font-weight:800;"><span style="color:var(--green);">✅ ${done} Finished</span><span>⏳ ${left} Left (${pct}%)</span></div>
+    </div>`;
+  }).join("");
+}
+
+function renderLecRow(it) {
+  const p1 = Boolean(store.checks[it.id+"_p1"]);
+  const boxes = [["p1","1st Study"],["p2","Rev 1"],["p3","Rev 2"],["p4","Qs"]].map(p => {
+    const k = `${it.id}_${p}`, on = Boolean(store.checks[k]);
+    return `<div class="pbox ${on?'on':''}" onclick="toggleChk('${k}')">${on?'✓ ':''}${p}</div>`;
+  }).join("");
+  return `<div class="lec-card ${p1?'done':''}" style="${scStyle(it.dept)}">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div class="main-chk ${p1?'on':''}" onclick="toggleChk('${it.id}_p1')">${p1?'✓':''}</div>
+      <div style="flex:1;display:flex;flex-wrap:wrap;align-items:center;gap:6px;">
+        <span class="num-pill">#${it.num}</span><span class="subj-pill">${it.dept}</span>
+        <span style="font-size:.92rem;font-weight:700;">${it.text}</span>
+      </div>
+      <button class="star ${store.stars[it.id]?'on':''}" onclick="toggleStar('${it.id}')">★</button>
+    </div>
+    <div class="passes">${boxes}</div>
+  </div>`;
+}
+
 function render() {
-  renderStrip();
+  renderNav(); renderStrip();
   const root = document.getElementById("viewRoot");
   const todayStr = new Date().toISOString().slice(0,10);
   const doneToday = Object.values(store.checks).filter(v => v === todayStr).length + Object.values(store.mid).filter(v => v === todayStr).length;
   document.getElementById("goalNum").textContent = `${doneToday}/5`;
+  document.getElementById("goalArc").setAttribute("stroke-dasharray", `${Math.min(100, doneToday*20)}, 100`);
 
-  if (!curMod) {
-    const dueMid = [];
-    RES_MID.forEach((d,di) => d.items.forEach((it,ii) => { const k=`d${di}-i${ii}`; if(!store.mid[k] && dueMid.length<3) dueMid.push({k,dept:it,text:it,src:"RES Mid"}); }));
-    const weak = [];
-    MODS.forEach(m => getItems(m).forEach(it => { if(store.stars[it.id] && weak.length<3) weak.push({id:it.id,mod:m.id,dept:it.dept,text:`#${it.num} ${it.text}`,src:m.code}); }));
-
-    const cards = MODS.map(m => {
-      const its = getItems(m);
-      const done = its.filter(it => store.checks[it.id+"_p1"]).length;
-      const left = its.length - done;
-      const pace = its.length ? (left / daysTo(m.exam)).toFixed(1) : "0.0";
-      const pct = its.length ? Math.round((done/its.length)*100) : 0;
-      return `<div class="mcard" onclick="openMod('${m.id}','${m.id==='mod_res'?'mid':'lec'}')">
-        <div style="display:flex;justify-content:space-between;align-items:center;"><span class="tag">${m.code}</span><span style="font-size:.75rem;color:var(--accent);font-weight:700;">⚡ ${pace}/day</span></div>
-        <h3 style="font-size:1.05rem;margin:6px 0 2px;">${m.name}</h3>
-        <div style="font-size:.76rem;color:var(--muted);">${m.sub}</div>
-        <div class="bar"><div class="fill" style="width:${pct}%"></div></div>
-        <div style="display:flex;justify-content:space-between;font-size:.78rem;font-weight:700;"><span style="color:var(--green);">${done} Finished</span><span style="color:var(--muted);">${left} Left (${pct}%)</span></div>
-      </div>`;
-    }).join("");
-
-    root.innerHTML = `<div class="card">
-      <div class="sec-h"><h2>🎯 Smart Today's Plan</h2><span class="tag">Auto-Curated</span></div>
-      ${dueMid.map(x=>`<div class="item" style="display:flex;align-items:center;gap:10px;"><input type="checkbox" onchange="toggleMid('${x.k}')"><span class="tag">${x.src}</span><span style="flex:1;font-size:.86rem;">${x.text}</span></div>`).join("")}
-      ${weak.map(x=>`<div class="item" onclick="openMod('${x.mod}','lec')" style="cursor:pointer;display:flex;align-items:center;gap:8px;"><span style="color:var(--amber);">★</span><span class="tag">${x.src}</span><span style="font-size:.86rem;">${x.text}</span></div>`).join("")}
-      ${(!dueMid.length && !weak.length)?'<p style="font-size:.84rem;color:var(--muted);">All caught up for today! Tap any module below to continue.</p>':''}
-    </div>
-    <div class="sec-h"><h2>Modules (Separate Tracking)</h2></div>
-    <div class="grid">${cards}</div>`;
+  if (viewMode === "home") {
+    const dueMid = [], weak = [];
+    RES_MID.forEach((d,di) => d.items.forEach((it,ii) => { const k=`d${di}-i${ii}`; if(!store.mid[k] && dueMid.length<3) dueMid.push({k,d:it.d,t:it.t}); }));
+    MODS.forEach(m => getItems(m).forEach(it => { if(store.stars[it.id] && weak.length<3) weak.push({mod:m.id,d:it.dept,t:`#${it.num} ${it.text}`,code:m.code}); }));
+    root.innerHTML = `<div class="card"><div class="sec-h"><h2>🎯 Smart Today's Plan</h2><span class="subj-pill" style="--sc:#38bdf8">Auto-Curated</span></div>
+      ${dueMid.map(x=>`<div class="lec-card" style="${scStyle(x.d)};display:flex;align-items:center;gap:10px;"><input type="checkbox" style="width:18px;height:18px;" onchange="toggleMid('${x.k}')"><span class="subj-pill">RES Mid · ${x.d}</span><span style="font-size:.88rem;font-weight:700;">${x.t}</span></div>`).join("")}
+      ${weak.map(x=>`<div class="lec-card" onclick="openMod('${x.mod}','lec')" style="${scStyle(x.d)};cursor:pointer;display:flex;align-items:center;gap:8px;"><span style="color:var(--amber);font-size:1.1rem;">★</span><span class="subj-pill">${x.code} · ${x.d}</span><span style="font-size:.88rem;font-weight:700;">${x.t}</span></div>`).join("")}
+      ${(!dueMid.length && !weak.length)?'<p style="font-size:.86rem;color:var(--muted);">All caught up for today! Pick any module below.</p>':''}
+    </div><div class="sec-h"><h2>Modules (Separate Tracking)</h2></div><div class="grid">${renderModCards()}</div>`;
     return;
   }
-  const m = MODS.find(x => x.id === curMod);
-  const its = getItems(m);
-  const done = its.filter(it => store.checks[it.id+"_p1"]).length;
-  const left = its.length - done;
+
+  if (viewMode === "modules") { root.innerHTML = `<div class="sec-h"><h2>All Semester Modules</h2></div><div class="grid">${renderModCards()}</div>`; return; }
+
+  const m = MODS.find(x => x.id === curMod), its = getItems(m);
+  const done = its.filter(it => store.checks[it.id+"_p1"]).length, left = its.length - done;
   const pace = its.length ? (left / daysTo(m.exam)).toFixed(1) : "0.0";
 
-  let modTabs = `<button class="tab ${curTab==='lec'?'on':''}" onclick="setTab('lec')">Finals Lectures (${its.length})</button>`;
-  if (m.id === "mod_res") modTabs += `<button class="tab ${curTab==='mid'?'on':''}" onclick="setTab('mid')">Midterm Plan (21)</button><button class="tab ${curTab==='prac'?'on':''}" onclick="setTab('prac')">Practical 14-List</button>`;
-  modTabs += `<button class="tab ${curTab==='res'?'on':''}" onclick="setTab('res')">Guides, Summaries & PDFs</button>`;
+  let modTabs = `<button class="tab ${curTab==='lec'?'on':''}" style="${curTab==='lec'?`background:${m.color};border-color:${m.color};`:''}" onclick="setTab('lec')">Finals Lectures (${its.length})</button>`;
+  if (m.id === "mod_res") modTabs += `<button class="tab ${curTab==='mid'?'on':''}" style="${curTab==='mid'?`background:${m.color};border-color:${m.color};`:''}" onclick="setTab('mid')">Midterm Plan (21)</button><button class="tab ${curTab==='prac'?'on':''}" style="${curTab==='prac'?`background:${m.color};border-color:${m.color};`:''}" onclick="setTab('prac')">Practical 14-List</button>`;
+  modTabs += `<button class="tab ${curTab==='res'?'on':''}" style="${curTab==='res'?`background:${m.color};border-color:${m.color};`:''}" onclick="setTab('res')">Guides, Summaries & PDFs</button>`;
 
   let bodyHtml = "";
   if (curTab === "lec") {
     const depts = ["All", "Remaining", "Weak ★", ...new Set(its.map(x=>x.dept))];
-    const fBar = depts.map(d => `<button class="tab ${filter===d?'on':''}" onclick="setFilter('${d}')">${d}</button>`).join("");
+    const fBar = depts.map(d => `<button class="tab ${filter===d?'on':''}" style="${filter===d?`background:${m.color};border-color:${m.color};`:''}" onclick="setFilter('${d}')">${d}</button>`).join("");
     const shown = its.filter(it => {
-      if (cram && !store.stars[it.id]) return false;
-      if (filter === "Remaining") return !store.checks[it.id+"_p1"];
-      if (filter === "Weak ★") return Boolean(store.stars[it.id]);
+      const unf = !store.checks[it.id+"_p1"], wk = Boolean(store.stars[it.id]);
+      if (cram && !wk && !unf) return false;
+      if (filter === "Remaining") return unf;
+      if (filter === "Weak ★") return wk;
       if (filter !== "All") return it.dept === filter;
       return true;
     });
-    bodyHtml = `<div class="tabs">${fBar}</div>
+    const listHtml = grouped ? [...new Set(shown.map(x=>x.dept))].map(dept => {
+      const subIts = shown.filter(x=>x.dept===dept), sDone = subIts.filter(x=>store.checks[x.id+"_p1"]).length;
+      return `<div class="grp-box" style="${scStyle(dept)}"><div class="grp-head" onclick="toggleGrp('${dept}')"><span>${collapsed[dept]?'▸':'▾'} ${dept} Group</span><span>${sDone}/${subIts.length} Done</span></div>${collapsed[dept]?'':subIts.map(renderLecRow).join("")}</div>`;
+    }).join("") : shown.map(renderLecRow).join("");
+
+    bodyHtml = `<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap;">
+      <div class="tabs" style="margin:0;flex:1;">${fBar}</div>
+      <button class="tbtn ${grouped?'blue':''}" onclick="grouped=!grouped;render()">🗂 Group by Subject</button>
+    </div>
     <form onsubmit="addTopic(event)" style="display:flex;gap:6px;margin-bottom:12px;">
-      <input id="newDept" placeholder="Subject" style="width:105px;background:var(--card);border:1px solid var(--border);color:var(--text);padding:8px;border-radius:10px;font-size:.82rem;" required>
-      <input id="newTxt" placeholder="Add lecture title..." style="flex:1;background:var(--card);border:1px solid var(--border);color:var(--text);padding:8px;border-radius:10px;font-size:.82rem;" required>
+      <select id="newDept" style="background:var(--card);border:1.5px solid var(--border);color:var(--text);padding:9px;border-radius:10px;font-size:.84rem;">${Object.keys(SUBJ_COLORS).map(k=>`<option>${k}</option>`).join("")}</select>
+      <input id="newTxt" placeholder="Add lecture title..." style="flex:1;background:var(--card);border:1.5px solid var(--border);color:var(--text);padding:9px;border-radius:10px;font-size:.84rem;" required>
       <button class="tbtn blue" type="submit">+ Add</button>
-    </form>
-    ${shown.map(it => {
-      const p1 = Boolean(store.checks[it.id+"_p1"]);
-      const boxes = [["p1","1st Study"],["p2","Rev 1"],["p3","Rev 2"],["p4","Qs"]].map(p => {
-        const k = `${it.id}_${p}`; const on = Boolean(store.checks[k]);
-        return `<div class="pbox ${on?'on':''}" onclick="toggleChk('${k}')">${on?'✓ ':''}${p}</div>`;
-      }).join("");
-      return `<div class="item ${p1?'done':''}">
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
-          <div><span class="tag">#${it.num} · ${it.dept}</span> <span style="font-size:.9rem;font-weight:600;">${it.text}</span></div>
-          <button class="star ${store.stars[it.id]?'on':''}" onclick="toggleStar('${it.id}')">★</button>
-        </div>
-        <div class="passes">${boxes}</div>
-      </div>`;
-    }).join("")}`;
+    </form>${listHtml}`;
   } else if (curTab === "mid") {
     bodyHtml = RES_MID.map((d,di) => `<div class="card"><div class="sec-h"><h2>${d.day}</h2></div>${d.items.map((it,ii)=>{
-      const k=`d${di}-i${ii}`; const on=Boolean(store.mid[k]);
-      return `<div class="item ${on?'done':''}" style="display:flex;align-items:center;gap:10px;"><input type="checkbox" ${on?'checked':''} onchange="toggleMid('${k}')"><span class="tag">${it}</span><span style="font-size:.88rem;">${it}</span></div>`;
-    }).join("")}</div>`).join("");
   } else if (curTab === "prac") {
     bodyHtml = RES_PRAC.map((it,i) => {
-      const boxes = [["p1","1st Study"],["p2","Rev 1"],["p3","Rev 2"],["p4","Qs"]].map(p => {
-        const k = `pr_${i}_${p}`; const on = Boolean(store.prac[k]);
-        return `<div class="pbox ${on?'on':''}" onclick="togglePrac('${k}')">${on?'✓ ':''}${p}</div>`;
+      const p1 = Boolean(store.prac[`pr_${i}_p1`]);
+      const boxes = PASS_LIST.map(p => {
+        const k = `pr_${i}_${p.k}`, on = Boolean(store.prac[k]);
+        return `<div class="pbox ${on?'on':''}" onclick="togglePrac('${k}')">${on?'✓ ':''}${p.l}</div>`;
       }).join("");
-      return `<div class="item"><span class="tag">#P${String(i+1).padStart(2,"0")} · ${it}</span> <b style="font-size:.9rem;">${it}</b><div class="passes">${boxes}</div></div>`;
+      return `<div class="lec-card ${p1?'done':''}" style="${scStyle(it.d)}"><div style="display:flex;align-items:center;gap:10px;"><div class="main-chk ${p1?'on':''}" onclick="togglePrac('pr_${i}_p1')">${p1?'✓':''}</div><span class="num-pill">#P${String(i+1).padStart(2,"0")}</span><span class="subj-pill">${it.d}</span><b style="font-size:.92rem;">${it.t}</b></div><div class="passes">${boxes}</div></div>`;
     }).join("");
   } else {
-    const autoPdfs = autoFiles[`pdfs/${m.folder}`] || [];
-    const autoGuides = autoFiles[`guides/${m.folder}`] || [];
-    const savedPdfs = store.pdfs[m.id] || [];
+    const autoPdfs = autoFiles[`pdfs/${m.folder}`] || [], autoGuides = autoFiles[`guides/${m.folder}`] || [], savedPdfs = store.pdfs[m.id] || [];
     bodyHtml = `<div class="card"><div class="sec-h"><h2>Interactive HTML Guides</h2></div>
-      ${[...m.staticGuides, ...autoGuides].map(g=>`<a href="${g.href}" class="item" style="display:block;text-decoration:none;color:var(--accent);font-weight:700;">✨ ${g.title} →</a>`).join("") || '<p style="font-size:.82rem;color:var(--muted);">Upload daily HTML guides to <b>guides/'+m.folder+'/</b> on GitHub to appear here automatically.</p>'}
+      ${[...m.staticGuides, ...autoGuides].map(g=>`<a href="${g.href}" class="lec-card" style="--sc:${m.color};--sc-bg:rgba(56,189,248,.1);display:block;text-decoration:none;color:${m.color};font-weight:800;">✨ ${g.title} →</a>`).join("") || '<p style="font-size:.84rem;color:var(--muted);">Upload daily HTML guides to <b>guides/'+m.folder+'/</b> on GitHub to appear here automatically.</p>'}
     </div>
     <div class="card"><div class="sec-h"><h2>Original Lecture PDFs</h2></div>
-      <form onsubmit="addPdf(event)" style="display:flex;gap:6px;margin-bottom:10px;">
-        <input id="pdfTitle" placeholder="PDF Title" style="width:130px;background:var(--card2);border:1px solid var(--border);color:var(--text);padding:8px;border-radius:10px;font-size:.82rem;" required>
-        <input id="pdfUrl" placeholder="Filename (e.g. ecg.pdf) or Drive link" style="flex:1;background:var(--card2);border:1px solid var(--border);color:var(--text);padding:8px;border-radius:10px;font-size:.82rem;" required>
+      <form onsubmit="addPdf(event)" style="display:flex;gap:6px;margin-bottom:12px;">
+        <input id="pdfTitle" placeholder="PDF Title" style="width:135px;background:var(--card2);border:1.5px solid var(--border);color:var(--text);padding:9px;border-radius:10px;font-size:.84rem;" required>
+        <input id="pdfUrl" placeholder="Filename (e.g. ecg.pdf) or Drive link" style="flex:1;background:var(--card2);border:1.5px solid var(--border);color:var(--text);padding:9px;border-radius:10px;font-size:.84rem;" required>
         <button class="tbtn blue" type="submit">+ Link</button>
       </form>
-      ${[...autoPdfs, ...savedPdfs].map(p=>`<a href="${p.href}" target="_blank" class="item" style="display:block;text-decoration:none;color:var(--text);font-weight:600;">📄 ${p.title} ↗</a>`).join("") || '<p style="font-size:.82rem;color:var(--muted);">Bulk-upload PDFs into <b>pdfs/'+m.folder+'/</b> on GitHub or paste a link above.</p>'}
+      ${[...autoPdfs, ...savedPdfs].map(p=>`<a href="${p.href}" target="_blank" class="lec-card" style="--sc:${m.color};--sc-bg:rgba(56,189,248,.08);display:block;text-decoration:none;color:var(--text);font-weight:700;">📄 ${p.title} ↗</a>`).join("") || '<p style="font-size:.84rem;color:var(--muted);">Bulk-upload PDFs into <b>pdfs/'+m.folder+'/</b> on GitHub or paste a link above.</p>'}
     </div>`;
   }
 
-  root.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-    <button class="tbtn" onclick="curMod=null;cram=false;render()">← Study Hub</button>
-    <button class="tbtn ${cram?'blue':''}" onclick="cram=!cram;render()">⚡ Exam-Eve Cram Mode: ${cram?'ON':'OFF'}</button>
+  root.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;gap:8px;flex-wrap:wrap;">
+    <button class="tbtn" onclick="goHome()">← Study Hub</button>
+    <button class="tbtn ${cram?'blue':''}" onclick="cram=!cram;render()">⚡ Exam Cram Mode (Weak ★ + Unfinished): ${cram?'ON':'OFF'}</button>
   </div>
-  <div class="card">
-    <div style="display:flex;justify-content:space-between;align-items:center;"><span class="tag">${m.code}</span><span style="font-size:.8rem;color:var(--accent);font-weight:700;">⚡ ${pace} topics/day needed</span></div>
-    <h2 style="margin:6px 0 2px;">${m.name}</h2>
-    <p style="font-size:.8rem;color:var(--muted);">${m.sub}</p>
-    <div class="bar"><div class="fill" style="width:${its.length?Math.round((done/its.length)*100):0}%"></div></div>
-    <div style="display:flex;justify-content:space-between;font-size:.82rem;font-weight:700;"><span style="color:var(--green);">✅ ${done} Finished</span><span>⏳ ${left} Left</span></div>
+  <div class="card" style="border-top:4px solid ${m.color}">
+    <div style="display:flex;justify-content:space-between;align-items:center;"><span style="background:${m.color};color:#fff;font-size:.72rem;font-weight:800;padding:3px 9px;border-radius:6px;">${m.code}</span><span style="font-size:.82rem;color:${m.color};font-weight:800;">⚡ ${pace} topics/day needed</span></div>
+    <h2 style="margin:6px 0 2px;font-size:1.25rem;">${m.name}</h2>
+    <p style="font-size:.82rem;color:var(--muted);">${m.sub}</p>
+    <div class="bar"><div class="fill" style="width:${its.length?Math.round((done/its.length)*100):0}%;background:${m.color}"></div></div>
+    <div style="display:flex;justify-content:space-between;font-size:.84rem;font-weight:800;"><span style="color:var(--green);">✅ ${done} Finished</span><span>⏳ ${left} Left</span></div>
   </div>
   <div class="tabs">${modTabs}</div>${bodyHtml}`;
 }
-
-window.openMod = (id, tab) => { curMod = id; curTab = tab || "lec"; filter = "All"; cram = false; render(); scanRepo(MODS.find(x=>x.id===id).folder); };
+window.goHome = () => { viewMode = "home"; curMod = null; cram = false; render(); };
+window.goModules = () => { viewMode = "modules"; curMod = null; cram = false; render(); };
+window.openMod = (id, tab) => { viewMode = "mod"; curMod = id; curTab = tab || "lec"; filter = "All"; cram = false; render(); scanRepo(MODS.find(x=>x.id===id).folder); };
 window.setTab = (t) => { curTab = t; render(); };
 window.setFilter = (f) => { filter = f; render(); };
+window.toggleGrp = (d) => { collapsed[d] = !collapsed[d]; render(); };
 window.toggleChk = (k) => { store.checks[k] = store.checks[k] ? false : new Date().toISOString().slice(0,10); persist(); };
 window.toggleStar = (id) => { store.stars[id] = !store.stars[id]; persist(); };
 window.toggleMid = (k) => { store.mid[k] = store.mid[k] ? false : new Date().toISOString().slice(0,10); persist(); };
@@ -280,18 +323,17 @@ window.addTopic = (e) => { e.preventDefault(); const m = MODS.find(x=>x.id===cur
 window.addPdf = (e) => { e.preventDefault(); store.pdfs[curMod] = store.pdfs[curMod] || []; store.pdfs[curMod].push({title:document.getElementById("pdfTitle").value,href:document.getElementById("pdfUrl").value}); persist(); };
 
 document.getElementById("searchIn").addEventListener("input", e => {
-  const q = e.target.value.trim().toLowerCase();
-  const box = document.getElementById("searchRes");
+  const q = e.target.value.trim().toLowerCase(), box = document.getElementById("searchRes");
   if (!q) { box.style.display = "none"; return; }
   const hits = [];
-  MODS.forEach(m => getItems(m).forEach(it => { if ((it.text+it.dept+it.num).toLowerCase().includes(q)) hits.push(`<div style="padding:6px;cursor:pointer;border-bottom:1px solid var(--border);font-size:.82rem;" onclick="openMod('${m.id}','lec')"><b>${m.code} #${it.num}</b> · ${it.text}</div>`); }));
-  box.innerHTML = hits.slice(0,8).join("") || '<div style="font-size:.8rem;color:var(--muted);">No matches found</div>';
+  MODS.forEach(m => getItems(m).forEach(it => { if ((it.text+it.dept+it.num).toLowerCase().includes(q)) hits.push(`<div style="padding:7px;cursor:pointer;border-bottom:1px solid var(--border);font-size:.84rem;" onclick="openMod('${m.id}','lec')"><b>${m.code} #${it.num}</b> · ${it.text}</div>`); }));
+  box.innerHTML = hits.slice(0,8).join("") || '<div style="font-size:.82rem;color:var(--muted);padding:6px;">No matches found</div>';
   box.style.display = "block";
 });
 
 document.getElementById("expBtn").onclick = () => { const a = document.createElement("a"); a.href = "data:application/json," + encodeURIComponent(JSON.stringify(store)); a.download = "study-hub-backup.json"; a.click(); };
 document.getElementById("impBtn").onclick = () => document.getElementById("impFile").click();
-document.getElementById("impFile").onchange = e => { const r = new FileReader(); r.onload = () => { store = JSON.parse(r.result); persist(); }; r.readAsText(e.target.files); };
+document.getElementById("impFile").onchange = e => { const r = new FileReader(); r.onload = () => { store = JSON.parse(r.result); persist(); }; r.readAsText(e.target.files[0]); };
 
 async function scanRepo(folder) {
   const api = location.protocol + "//" + ["api","github","com"].join(".") + "/repos/omar200008/Uni-Studying/contents/";
@@ -312,24 +354,24 @@ function addJs(u) { return new Promise((ok, no) => { const s = document.createEl
     await addJs(p + "firebase-app-compat.js");
     await addJs(p + "firebase-firestore-compat.js");
     firebase.initializeApp({
-      apiKey: "AIzaSyCxtO8FdhPF-4qacnMIOtzCRP30KeZ3sYo",authDomain: ["uni-study-tracker-58dd0","firebaseapp","com"].join("."),
-projectId: "uni-study-tracker-58dd0",
-storageBucket: ["uni-study-tracker-58dd0","firebasestorage","app"].join("."),
-messagingSenderId: "16736564692",
-appId: "1:16736564692:web:8c8300a0833c790d84d241"
-});
-const db = firebase.firestore();
-db.settings({ experimentalForceLongPolling: true });
-const ref = db.collection("studyData").doc("v7_workspace");
-saveCloud = (st) => ref.set(st);
-ref.onSnapshot(snap => {
-document.getElementById("dot").classList.add("live");
-document.getElementById("syncTxt").textContent = "Synced";
-if (snap.exists) { store = Object.assign(store, snap.data()); localStorage.setItem("v7_hub", JSON.stringify(store)); render(); }
-});
-} catch (e) { document.getElementById("syncTxt").textContent = "Offline Mode"; }
+      apiKey: "AIzaSyCxtO8FdhPF-4qacnMIOtzCRP30KeZ3sYo",
+      authDomain: ["uni-study-tracker-58dd0","firebaseapp","com"].join("."),
+      projectId: "uni-study-tracker-58dd0",
+      storageBucket: ["uni-study-tracker-58dd0","firebasestorage","app"].join("."),
+      messagingSenderId: "16736564692",
+      appId: "1:16736564692:web:8c8300a0833c790d84d241"
+    });
+    const db = firebase.firestore();
+    db.settings({ experimentalForceLongPolling: true });
+    const ref = db.collection("studyData").doc("v7_workspace");
+    saveCloud = (st) => ref.set(st);
+    ref.onSnapshot(snap => {
+      document.getElementById("dot").classList.add("live");
+      document.getElementById("syncTxt").textContent = "Synced";
+      if (snap.exists) { store = Object.assign(store, snap.data()); localStorage.setItem("v9_hub", JSON.stringify(store)); render(); }
+    });
+  } catch (e) { document.getElementById("syncTxt").textContent = "Offline Mode"; }
 })();
-  </script>
+</script>
 </body>
 </html>
-
