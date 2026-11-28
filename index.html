@@ -115,7 +115,6 @@ const SUBJ_COLORS = {
   Review: { c:"#8b5cf6", bg:"rgba(139,92,246,.14)" }
 };
 function scStyle(dept) { const s = SUBJ_COLORS[dept] || { c:"#38bdf8", bg:"rgba(56,189,248,.14)" }; return `--sc:${s.c};--sc-bg:${s.bg};`; }
-
 const EXAMS = [
   { id:"ex1", mod:"mod_res", tab:"mid", name:"RES-233 Mid", date:"2026-12-06T09:00:00", label:"Sun, Dec 6" },
   { id:"ex2", mod:"mod_res", tab:"prac", name:"RES-233 Practical", date:"2026-12-19T09:00:00", label:"Sat, Dec 19" },
@@ -126,6 +125,7 @@ const EXAMS = [
   { id:"ex7", mod:"mod_cvs", tab:"lec", name:"CVS-232 Final", date:"2027-01-17T09:00:00", label:"Sun, Jan 17" },
   { id:"ex8", mod:"mod_hps", tab:"lec", name:"HPS-231 Final", date:"2027-01-21T09:00:00", label:"Thu, Jan 21" }
 ];
+
 const RES_MID = [
   { day:"Day 1 · Fri Nov 27", items:[{d:"Anatomy",t:"1. Nasal cavity & paranasal sinus, nasopharynx, larynx"},{d:"Anatomy",t:"2. Anatomy of the lung"},{d:"Anatomy",t:"3. Tutorial 1 — trachea & bronchi"}]},
   { day:"Day 2 · Sat Nov 28", items:[{d:"Histology",t:"4. Histology of conducting parts of respiratory system"},{d:"Physiology",t:"5. Mechanics of ventilation"},{d:"Physiology",t:"6. Neural control of breathing"}]},
@@ -156,7 +156,7 @@ const MODS = [
   { id:"mod_bcs", code:"BCS-234", color:"#10b981", folder:"bcs", name:"Basic Clinical Skills", exam:"2027-01-03", sub:"Mid: Jan 3 · Practical: Jan 4–5, 2027", staticGuides:[], items:[] },
   { id:"mod_ele", code:"ELE-235", color:"#f59e0b", folder:"ele", name:"Elective Course", exam:"2026-12-24", sub:"Final Exam: Thu, Dec 24, 2026", staticGuides:[], items:[] }
 ];
-let store = JSON.parse(localStorage.getItem("v9_hub") || localStorage.getItem("v8_hub") || "{}");
+let store = JSON.parse(localStorage.getItem("v9_hub") || "{}");
 store.checks = store.checks || {}; store.stars = store.stars || {}; store.mid = store.mid || {}; store.prac = store.prac || {}; store.custom = store.custom || {}; store.pdfs = store.pdfs || {};
 let viewMode = "home", curMod = null, curTab = "lec", filter = "All", cram = false, grouped = false, collapsed = {}, autoFiles = {}, saveCloud = null;
 
@@ -180,7 +180,6 @@ function renderStrip() {
     return `<div class="chip ${ms<=0?'past':''}" style="border-top:3px solid ${m.color}" onclick="openMod('${e.mod}','${e.tab}')"><div class="cdays" style="color:${m.color}">${ms<=0?'Done':d+'d left'}</div><div class="cname">${e.name}</div><div class="cdate">${e.label}</div></div>`;
   }).join("");
 }
-
 function renderModCards() {
   return MODS.map(m => {
     const its = getItems(m), done = its.filter(it => store.checks[it.id+"_p1"]).length, left = its.length - done;
@@ -198,8 +197,8 @@ function renderModCards() {
 function renderLecRow(it) {
   const p1 = Boolean(store.checks[it.id+"_p1"]);
   const boxes = [["p1","1st Study"],["p2","Rev 1"],["p3","Rev 2"],["p4","Qs"]].map(p => {
-    const k = `${it.id}_${p}`, on = Boolean(store.checks[k]);
-    return `<div class="pbox ${on?'on':''}" onclick="toggleChk('${k}')">${on?'✓ ':''}${p}</div>`;
+    const k = `${it.id}_${p[0]}`, on = Boolean(store.checks[k]);
+    return `<div class="pbox ${on?'on':''}" onclick="toggleChk('${k}')">${on?'✓ ':''}${p[1]}</div>`;
   }).join("");
   return `<div class="lec-card ${p1?'done':''}" style="${scStyle(it.dept)}">
     <div style="display:flex;align-items:center;gap:10px;">
@@ -213,7 +212,6 @@ function renderLecRow(it) {
     <div class="passes">${boxes}</div>
   </div>`;
 }
-
 function render() {
   renderNav(); renderStrip();
   const root = document.getElementById("viewRoot");
@@ -243,7 +241,6 @@ function render() {
   let modTabs = `<button class="tab ${curTab==='lec'?'on':''}" style="${curTab==='lec'?`background:${m.color};border-color:${m.color};`:''}" onclick="setTab('lec')">Finals Lectures (${its.length})</button>`;
   if (m.id === "mod_res") modTabs += `<button class="tab ${curTab==='mid'?'on':''}" style="${curTab==='mid'?`background:${m.color};border-color:${m.color};`:''}" onclick="setTab('mid')">Midterm Plan (21)</button><button class="tab ${curTab==='prac'?'on':''}" style="${curTab==='prac'?`background:${m.color};border-color:${m.color};`:''}" onclick="setTab('prac')">Practical 14-List</button>`;
   modTabs += `<button class="tab ${curTab==='res'?'on':''}" style="${curTab==='res'?`background:${m.color};border-color:${m.color};`:''}" onclick="setTab('res')">Guides, Summaries & PDFs</button>`;
-
   let bodyHtml = "";
   if (curTab === "lec") {
     const depts = ["All", "Remaining", "Weak ★", ...new Set(its.map(x=>x.dept))];
@@ -272,16 +269,20 @@ function render() {
     </form>${listHtml}`;
   } else if (curTab === "mid") {
     bodyHtml = RES_MID.map((d,di) => `<div class="card"><div class="sec-h"><h2>${d.day}</h2></div>${d.items.map((it,ii)=>{
+      const k=`d${di}-i${ii}`, on=Boolean(store.mid[k]);
+      return `<div class="lec-card ${on?'done':''}" style="${scStyle(it.d)};display:flex;align-items:center;gap:10px;"><input type="checkbox" style="width:18px;height:18px;" ${on?'checked':''} onchange="toggleMid('${k}')"><span class="subj-pill">${it.d}</span><span style="font-size:.9rem;font-weight:700;">${it.t}</span></div>`;
+    }).join("")}</div>`).join("");
   } else if (curTab === "prac") {
     bodyHtml = RES_PRAC.map((it,i) => {
       const p1 = Boolean(store.prac[`pr_${i}_p1`]);
-      const boxes = PASS_LIST.map(p => {
-        const k = `pr_${i}_${p.k}`, on = Boolean(store.prac[k]);
-        return `<div class="pbox ${on?'on':''}" onclick="togglePrac('${k}')">${on?'✓ ':''}${p.l}</div>`;
+      const boxes = [["p1","1st Study"],["p2","Rev 1"],["p3","Rev 2"],["p4","Qs"]].map(p => {
+        const k = `pr_${i}_${p[0]}`, on = Boolean(store.prac[k]);
+        return `<div class="pbox ${on?'on':''}" onclick="togglePrac('${k}')">${on?'✓ ':''}${p[1]}</div>`;
       }).join("");
       return `<div class="lec-card ${p1?'done':''}" style="${scStyle(it.d)}"><div style="display:flex;align-items:center;gap:10px;"><div class="main-chk ${p1?'on':''}" onclick="togglePrac('pr_${i}_p1')">${p1?'✓':''}</div><span class="num-pill">#P${String(i+1).padStart(2,"0")}</span><span class="subj-pill">${it.d}</span><b style="font-size:.92rem;">${it.t}</b></div><div class="passes">${boxes}</div></div>`;
     }).join("");
-  } else {
+  }
+  else {
     const autoPdfs = autoFiles[`pdfs/${m.folder}`] || [], autoGuides = autoFiles[`guides/${m.folder}`] || [], savedPdfs = store.pdfs[m.id] || [];
     bodyHtml = `<div class="card"><div class="sec-h"><h2>Interactive HTML Guides</h2></div>
       ${[...m.staticGuides, ...autoGuides].map(g=>`<a href="${g.href}" class="lec-card" style="--sc:${m.color};--sc-bg:rgba(56,189,248,.1);display:block;text-decoration:none;color:${m.color};font-weight:800;">✨ ${g.title} →</a>`).join("") || '<p style="font-size:.84rem;color:var(--muted);">Upload daily HTML guides to <b>guides/'+m.folder+'/</b> on GitHub to appear here automatically.</p>'}
@@ -309,6 +310,7 @@ function render() {
   </div>
   <div class="tabs">${modTabs}</div>${bodyHtml}`;
 }
+
 window.goHome = () => { viewMode = "home"; curMod = null; cram = false; render(); };
 window.goModules = () => { viewMode = "modules"; curMod = null; cram = false; render(); };
 window.openMod = (id, tab) => { viewMode = "mod"; curMod = id; curTab = tab || "lec"; filter = "All"; cram = false; render(); scanRepo(MODS.find(x=>x.id===id).folder); };
@@ -375,3 +377,4 @@ function addJs(u) { return new Promise((ok, no) => { const s = document.createEl
 </script>
 </body>
 </html>
+
